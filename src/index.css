@@ -1,0 +1,38 @@
+:root {
+  font-family: 'Nunito', 'Trebuchet MS', 'Avenir Next', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #243142;
+  background:
+    radial-gradient(circle at center top, rgba(30, 15, 60, 0.9), transparent 40%),
+    linear-gradient(#0e0e1a 0%, #1a1228 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

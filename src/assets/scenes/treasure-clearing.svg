@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="tc-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#06040e"/>
+      <stop offset="60%" stop-color="#12101e"/>
+    </linearGradient>
+    <linearGradient id="tc-ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141e0c"/>
+      <stop offset="100%" stop-color="#0a1208"/>
+    </linearGradient>
+    <radialGradient id="tc-chestGlow" cx="50%" cy="100%" r="80%">
+      <stop offset="0%" stop-color="#d0a030" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#d0a030" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tc-f1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e060ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8020cc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tc-f2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff6040" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#cc2000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tc-f3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#40e0ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0080c0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tc-moonHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffde0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#fffde0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#tc-sky)"/>
+  <g fill="#fffde0" opacity="0.65">
+    <circle cx="80" cy="35" r="1.2"/><circle cx="160" cy="20" r="0.9"/>
+    <circle cx="260" cy="50" r="1.4"/><circle cx="340" cy="28" r="1"/>
+    <circle cx="440" cy="45" r="1.1"/><circle cx="520" cy="18" r="1.3"/>
+    <circle cx="680" cy="55" r="1"/><circle cx="750" cy="25" r="1.2"/>
+    <circle cx="720" cy="80" r="0.8"/><circle cx="600" cy="70" r="1"/>
+  </g>
+  <circle cx="680" cy="75" r="65" fill="url(#tc-moonHalo)"/>
+  <circle cx="680" cy="75" r="35" fill="#fffde0"/>
+  <circle cx="698" cy="66" r="29" fill="#12101e"/>
+  <g fill="#070b04">
+    <polygon points="0,450 50,220 100,450"/>
+    <polygon points="80,450 130,232 180,450"/>
+    <polygon points="30,305 60,200 90,305"/>
+    <polygon points="620,450 670,222 720,450"/>
+    <polygon points="700,450 750,232 800,450"/>
+    <polygon points="660,305 690,197 720,305"/>
+  </g>
+  <rect x="0" y="342" width="800" height="108" fill="url(#tc-ground)"/>
+  <ellipse cx="400" cy="347" rx="280" ry="38" fill="#1a2810" opacity="0.6"/>
+  <ellipse cx="400" cy="372" rx="100" ry="28" fill="url(#tc-chestGlow)"/>
+  <rect x="332" y="292" width="136" height="86" fill="#6a3a10" rx="5"/>
+  <line x1="332" y1="316" x2="468" y2="316" stroke="#4a2808" stroke-width="3"/>
+  <line x1="332" y1="338" x2="468" y2="338" stroke="#4a2808" stroke-width="3"/>
+  <line x1="372" y1="292" x2="372" y2="362" stroke="#4a2808" stroke-width="2"/>
+  <line x1="428" y1="292" x2="428" y2="362" stroke="#4a2808" stroke-width="2"/>
+  <rect x="330" y="292" width="12" height="76" fill="#8a7040" rx="2"/>
+  <rect x="458" y="292" width="12" height="76" fill="#8a7040" rx="2"/>
+  <rect x="328" y="324" width="144" height="12" fill="#8a7040" rx="2"/>
+  <rect x="330" y="362" width="140" height="14" fill="#4a2808" rx="3"/>
+  <rect x="328" y="268" width="144" height="28" fill="#7a4414" rx="5"/>
+  <rect x="330" y="270" width="140" height="24" fill="#6a3a10" rx="4"/>
+  <rect x="328" y="278" width="144" height="10" fill="#8a7040" rx="2"/>
+  <rect x="387" y="320" width="26" height="20" fill="#a08040" rx="3"/>
+  <rect x="393" y="314" width="14" height="11" fill="none" stroke="#a08040" stroke-width="3.5" rx="7"/>
+  <line x1="332" y1="268" x2="468" y2="268" stroke="#ffd060" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="400" cy="266" rx="55" ry="5" fill="#d0a020" opacity="0.18"/>
+  <circle cx="252" cy="362" r="18" fill="url(#tc-f1)"/>
+  <circle cx="252" cy="362" r="6" fill="#e060ff" opacity="0.9"/>
+  <circle cx="182" cy="377" r="14" fill="url(#tc-f2)"/>
+  <circle cx="182" cy="377" r="5" fill="#ff8060" opacity="0.9"/>
+  <circle cx="312" cy="387" r="12" fill="url(#tc-f3)"/>
+  <circle cx="312" cy="387" r="4" fill="#60e8ff" opacity="0.9"/>
+  <circle cx="548" cy="364" r="16" fill="url(#tc-f1)"/>
+  <circle cx="548" cy="364" r="5" fill="#e060ff" opacity="0.9"/>
+  <circle cx="612" cy="380" r="13" fill="url(#tc-f2)"/>
+  <circle cx="612" cy="380" r="4" fill="#ff8060" opacity="0.9"/>
+  <circle cx="488" cy="390" r="11" fill="url(#tc-f3)"/>
+  <circle cx="488" cy="390" r="4" fill="#60e8ff" opacity="0.9"/>
+  <circle cx="222" cy="402" r="5" fill="#e060ff" opacity="0.45"/>
+  <circle cx="352" cy="412" r="4" fill="#ff6040" opacity="0.45"/>
+  <circle cx="458" cy="407" r="5" fill="#40e0ff" opacity="0.45"/>
+  <circle cx="578" cy="400" r="4" fill="#e060ff" opacity="0.45"/>
+</svg>

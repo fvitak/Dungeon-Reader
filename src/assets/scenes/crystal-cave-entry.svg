@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#1b3552" />
+  <circle cx="620" cy="102" r="58" fill="#8de3ff" opacity="0.35" />
+  <path d="M90 330 L190 150 L280 315 L370 175 L460 320 L560 145 L710 330 Z" fill="#8de3ff" opacity="0.22" />
+  <text x="400" y="90" text-anchor="middle" fill="#f1fcff" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Crystal Cave</text>
+</svg>

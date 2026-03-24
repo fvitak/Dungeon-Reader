@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#5f4b2a" />
+  <circle cx="622" cy="100" r="58" fill="#ffe4a8" opacity="0.36" />
+  <path d="M92 330 L186 180 L280 314 L374 166 L468 320 L562 188 L710 330 Z" fill="#ffe4a8" opacity="0.2" />
+  <path d="M120 332 Q250 270 390 302 T700 248" stroke="#ffe4a8" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.88" />
+  <text x="400" y="90" text-anchor="middle" fill="#fff9ef" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Cave Exit</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#47294f" />
+  <circle cx="622" cy="102" r="58" fill="#ffb7f5" opacity="0.35" />
+  <path d="M180 252 Q220 208 260 252 Q300 212 340 252" stroke="#ffb7f5" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.78" />
+  <path d="M320 312 Q360 268 400 312 Q440 272 480 312" stroke="#ffb7f5" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.78" />
+  <path d="M470 236 Q510 192 550 236 Q590 196 630 236" stroke="#ffb7f5" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.78" />
+  <text x="400" y="90" text-anchor="middle" fill="#fff6fd" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Crystal Bats</text>
+</svg>

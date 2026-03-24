@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#23485a" />
+  <circle cx="620" cy="102" r="58" fill="#b7f4ff" opacity="0.35" />
+  <ellipse cx="400" cy="300" rx="240" ry="64" fill="#b7f4ff" opacity="0.22" />
+  <path d="M180 286 Q260 260 340 286 T500 286 T620 286" stroke="#b7f4ff" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.84" />
+  <text x="400" y="90" text-anchor="middle" fill="#f4feff" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Mirror Lake</text>
+</svg>

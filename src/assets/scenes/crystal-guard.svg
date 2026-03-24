@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#234b63" />
+  <circle cx="620" cy="106" r="56" fill="#a8efff" opacity="0.34" />
+  <ellipse cx="400" cy="290" rx="140" ry="54" fill="#a8efff" opacity="0.22" />
+  <circle cx="346" cy="280" r="38" fill="#a8efff" opacity="0.72" />
+  <circle cx="454" cy="280" r="38" fill="#a8efff" opacity="0.72" />
+  <text x="400" y="90" text-anchor="middle" fill="#f4fcff" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Crystal Crab</text>
+</svg>

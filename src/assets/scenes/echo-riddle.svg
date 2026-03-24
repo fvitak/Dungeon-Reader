@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#2d3c68" />
+  <circle cx="618" cy="102" r="56" fill="#c6d8ff" opacity="0.34" />
+  <path d="M126 294 Q260 206 404 274 T680 242" stroke="#c6d8ff" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.88" />
+  <path d="M156 324 Q290 236 434 304 T710 272" stroke="#c6d8ff" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.56" />
+  <text x="400" y="90" text-anchor="middle" fill="#f7f9ff" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Echo Tunnel</text>
+</svg>

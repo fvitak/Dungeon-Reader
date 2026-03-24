@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+  <rect width="800" height="440" fill="#5f2d5a" />
+  <circle cx="620" cy="102" r="58" fill="#ffd8f4" opacity="0.34" />
+  <path d="M400 318 C320 258 292 228 292 186 C292 152 318 130 350 130 C374 130 392 144 400 164 C408 144 426 130 450 130 C482 130 508 152 508 186 C508 228 480 258 400 318 Z" fill="#ffd8f4" opacity="0.78" />
+  <text x="400" y="90" text-anchor="middle" fill="#fff7fd" font-size="40" font-family="Trebuchet MS, Verdana, sans-serif">Crystal Heart</text>
+</svg>
