@@ -4,12 +4,25 @@ import type {
   GradeBand,
   RiddleEvent,
   StoryScene,
+  RootwoodScene,
   GameEvent,
   GameState,
 } from '../types/game'
+import {
+  type MathSkillLevel,
+  type ReadingSkillLevel,
+  type SkillProfile,
+  type MathLevelText,
+  type ReadingLevelText,
+  selectForMathLevel,
+  selectForReadingLevel,
+  nextMathLevel,
+  nextReadingLevel,
+  MASTERY_THRESHOLD,
+} from '../types/skillLevel'
 
 interface UseGameEngineOptions {
-  scenes: StoryScene[]
+  scenes: StoryScene[] | RootwoodScene[]
   initialSceneId: string
   initialGradeBand?: GradeBand
 }
@@ -18,6 +31,8 @@ const defaultStats = {
   coins: 0,
   stars: 0,
   hearts: 3,
+  xp: 0,
+  xpThisEpisode: 0,
 }
 
 export function useGameEngine({
@@ -29,6 +44,11 @@ export function useGameEngine({
     currentSceneId: initialSceneId,
     completedSceneIds: [],
     gradeBand: initialGradeBand,
+    skillProfile: {
+      math: 'M1',
+      reading: 'R1',
+    },
+    consecutiveCorrect: 0,
     stats: defaultStats,
     inventory: [],
     rewards: [],
@@ -36,7 +56,7 @@ export function useGameEngine({
   })
 
   const currentScene = useMemo(
-    () => scenes.find((scene) => scene.id === gameState.currentSceneId),
+    () => (scenes as Array<{ id: string }>).find((scene) => scene.id === gameState.currentSceneId),
     [gameState.currentSceneId, scenes],
   )
 
@@ -60,8 +80,9 @@ export function useGameEngine({
   }
 
   function moveToNextScene() {
-    if (currentScene?.nextSceneId) {
-      moveToScene(currentScene.nextSceneId)
+    const scene = currentScene as { nextSceneId?: string } | undefined
+    if (scene?.nextSceneId) {
+      moveToScene(scene.nextSceneId)
     }
   }
 
@@ -129,11 +150,29 @@ export function useGameEngine({
         nextState.stats.stars += 1
       }
 
-      if (
-        (event.type === 'combat' || event.type === 'riddle') &&
-        result === 'fail'
-      ) {
-        nextState.stats.hearts = Math.max(0, nextState.stats.hearts - 1)
+      // XP on success
+      if (result === 'success' && (event.type === 'combat' || event.type === 'riddle')) {
+        const xpGain = nextState.consecutiveCorrect === 0 ? 15 : 8
+        nextState.stats.xp += xpGain
+        nextState.stats.xpThisEpisode += xpGain
+        nextState.consecutiveCorrect += 1
+      }
+
+      // XP on choice (always awarded, any path)
+      if (event.type === 'choice') {
+        nextState.stats.xp += 5
+        nextState.stats.xpThisEpisode += 5
+      }
+
+      // Reset streak on wrong answer (no XP penalty, just reset)
+      if (result === 'fail') {
+        nextState.consecutiveCorrect = 0
+      }
+
+      // Mastery check — component watches __readyToAdvanceMath flag
+      if (nextState.consecutiveCorrect >= MASTERY_THRESHOLD) {
+        nextState.flags['__readyToAdvanceMath'] = true
+        nextState.consecutiveCorrect = 0
       }
 
       const nextSceneId =
@@ -155,6 +194,43 @@ export function useGameEngine({
     })
   }
 
+  function advanceMathLevel() {
+    setGameState(prev => {
+      const next = nextMathLevel(prev.skillProfile.math)
+      if (!next) return prev
+      return {
+        ...prev,
+        skillProfile: { ...prev.skillProfile, math: next },
+        consecutiveCorrect: 0,
+        flags: { ...prev.flags, __readyToAdvanceMath: false },
+      }
+    })
+  }
+
+  function advanceReadingLevel() {
+    setGameState(prev => {
+      const next = nextReadingLevel(prev.skillProfile.reading)
+      if (!next) return prev
+      return {
+        ...prev,
+        skillProfile: { ...prev.skillProfile, reading: next },
+        consecutiveCorrect: 0,
+      }
+    })
+  }
+
+  function setSkillProfile(profile: SkillProfile) {
+    setGameState(prev => ({ ...prev, skillProfile: profile }))
+  }
+
+  function getMathPrompt(content: MathLevelText): string {
+    return selectForMathLevel(content, gameState.skillProfile.math)
+  }
+
+  function getReadingPrompt(content: ReadingLevelText): string {
+    return selectForReadingLevel(content, gameState.skillProfile.reading)
+  }
+
   return {
     gameState,
     currentScene,
@@ -164,6 +240,11 @@ export function useGameEngine({
     chooseOption,
     rewardChallengeSuccess,
     resolveEvent,
+    advanceMathLevel,
+    advanceReadingLevel,
+    setSkillProfile,
+    getMathPrompt,
+    getReadingPrompt,
   }
 }
 
