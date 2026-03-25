@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGameEngine } from '../game/useGameEngine'
 import { rootwoodEpisode1, rootwoodEpisode1Meta } from '../data/rootwoodEpisode1'
 import {
@@ -11,10 +11,17 @@ import type {
   RootwoodChallengeEvent,
   RootwoodChoiceEvent,
   RootwoodRewardEvent,
+  RootwoodReward,
   GameEvent,
 } from '../types/game'
+import type { TrophyItem } from '../App'
 
-export function RootwoodShell() {
+interface RootwoodShellProps {
+  onComplete: (episodeId: string, rewards: TrophyItem[]) => void
+  onBack: () => void
+}
+
+export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
   const {
     gameState,
     currentScene,
@@ -22,7 +29,6 @@ export function RootwoodShell() {
     chooseOption,
     resolveEvent,
     advanceMathLevel,
-    advanceReadingLevel,
     getMathPrompt,
     getReadingPrompt,
   } = useGameEngine({
@@ -30,11 +36,8 @@ export function RootwoodShell() {
     initialSceneId: rootwoodEpisode1Meta.initialSceneId,
   })
 
-  // Watch mastery flag and advance the appropriate skill
   useEffect(() => {
     if (gameState.flags['__readyToAdvance']) {
-      // Advance whichever skill type was most recently challenged
-      // (simple heuristic: advance math; reading advancement triggered by component)
       advanceMathLevel()
     }
   }, [gameState.flags['__readyToAdvance']])
@@ -45,6 +48,17 @@ export function RootwoodShell() {
     buttonLabel: string
     continueAction: () => void
   } | null>(null)
+
+  // Collect rewards earned during this episode
+  const earnedRewards = useRef<TrophyItem[]>([])
+  function trackReward(reward: RootwoodReward) {
+    if (!earnedRewards.current.some(r => r.id === reward.id)) {
+      earnedRewards.current = [
+        ...earnedRewards.current,
+        { ...reward, episodeId: rootwoodEpisode1Meta.id },
+      ]
+    }
+  }
 
   const scene = currentScene as RootwoodScene | undefined
 
@@ -62,9 +76,11 @@ export function RootwoodShell() {
   const totalPages = rootwoodEpisode1.length
 
   function handleResolve(event: RootwoodEvent, result: 'success' | 'fail') {
-    // RootwoodChallengeEvent casts safely — success/fail nav falls through
-    // to successSceneId/failureSceneId which both event shapes have
     resolveEvent(event as unknown as GameEvent, result)
+  }
+
+  function handleEpisodeEnd() {
+    onComplete(rootwoodEpisode1Meta.id, earnedRewards.current)
   }
 
   return (
@@ -95,6 +111,9 @@ export function RootwoodShell() {
             <div className="stat-pill">📖 {gameState.skillProfile.reading}</div>
             <div className="stat-pill">🔢 {gameState.skillProfile.math}</div>
           </div>
+          <button className="back-button" onClick={onBack} type="button">
+            ← Menu
+          </button>
         </header>
 
         <section className="scene-panel">
@@ -119,6 +138,8 @@ export function RootwoodShell() {
             onChoose={chooseOption}
             onResolve={handleResolve}
             onShowReward={setRewardPopup}
+            onTrackReward={trackReward}
+            onEpisodeEnd={handleEpisodeEnd}
           />
         </footer>
       </section>
@@ -141,6 +162,8 @@ function RootwoodEventControls({
   onChoose,
   onResolve,
   onShowReward,
+  onTrackReward,
+  onEpisodeEnd,
 }: {
   scene: RootwoodScene
   getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
@@ -149,6 +172,8 @@ function RootwoodEventControls({
   onChoose: (nextSceneId: string, flagKey?: string) => void
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
+  onTrackReward: (reward: RootwoodReward) => void
+  onEpisodeEnd: () => void
 }) {
   const event = scene.event
 
@@ -159,13 +184,15 @@ function RootwoodEventControls({
       </button>
     ) : (
       <>
-        <p className="action-note">Episode complete! More coming soon.</p>
+        <p className="action-note feedback-panel feedback-panel-success">
+          To be continued...
+        </p>
         <button
           className="action-button continue-button"
-          onClick={() => window.location.reload()}
+          onClick={onEpisodeEnd}
           type="button"
         >
-          Return to Start
+          Finish Episode
         </button>
       </>
     )
@@ -181,11 +208,11 @@ function RootwoodEventControls({
         event={event}
         onResolve={onResolve}
         onShowReward={onShowReward}
+        onTrackReward={onTrackReward}
       />
     )
   }
 
-  // event.type === 'challenge'
   return (
     <ChallengeControls
       key={scene.id}
@@ -194,6 +221,7 @@ function RootwoodEventControls({
       getReadingPrompt={getReadingPrompt}
       onResolve={onResolve}
       onShowReward={onShowReward}
+      onTrackReward={onTrackReward}
     />
   )
 }
@@ -228,10 +256,12 @@ function RewardControls({
   event,
   onResolve,
   onShowReward,
+  onTrackReward,
 }: {
   event: RootwoodRewardEvent
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
+  onTrackReward: (reward: RootwoodReward) => void
 }) {
   const [collected, setCollected] = useState(false)
 
@@ -248,14 +278,13 @@ function RewardControls({
           className="action-button"
           onClick={() => {
             setCollected(true)
+            onTrackReward(event.reward)
             onResolve(event, 'success')
             onShowReward({
               message: `You found the ${event.reward.label}!`,
               xp: 5,
-              buttonLabel: event.nextSceneId ? 'Continue' : 'Return to Start',
-              continueAction: event.nextSceneId
-                ? () => {}  // resolveEvent already navigated
-                : () => window.location.reload(),
+              buttonLabel: event.nextSceneId ? 'Continue' : 'Finish Episode',
+              continueAction: () => {},
             })
           }}
           type="button"
@@ -273,12 +302,14 @@ function ChallengeControls({
   getReadingPrompt,
   onResolve,
   onShowReward,
+  onTrackReward,
 }: {
   event: RootwoodChallengeEvent
   getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
   getReadingPrompt: (c: Parameters<typeof selectForReadingLevel>[0]) => string
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
+  onTrackReward: (reward: RootwoodReward) => void
 }) {
   const [status, setStatus] = useState<'idle' | 'success' | 'fail'>('idle')
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -288,18 +319,18 @@ function ChallengeControls({
   const hint   = selectLevel(event.hintByLevel   as Parameters<typeof selectForMathLevel>[0])
 
   function handleTap(optionId: string, isCorrect: boolean) {
-    if (status === 'success') return  // already solved
-
+    if (status === 'success') return
     setSelectedId(optionId)
 
     if (isCorrect) {
       setStatus('success')
       onResolve(event, 'success')
+      if (event.reward) onTrackReward(event.reward)
       onShowReward({
         message: 'Well done!',
         xp: 15,
         buttonLabel: 'Continue',
-        continueAction: () => {},  // resolveEvent already navigated
+        continueAction: () => {},
       })
     } else {
       setStatus('fail')
@@ -323,16 +354,14 @@ function ChallengeControls({
           const showCorrect = status !== 'idle' && option.isCorrect
           const showWrong   = status === 'fail' && isSelected && !option.isCorrect
 
-          const className = showCorrect
-            ? 'action-button answer-button answer-button-correct'
-            : showWrong
-              ? 'action-button answer-button answer-button-wrong'
-              : 'action-button answer-button'
-
           return (
             <button
               key={option.id}
-              className={className}
+              className={
+                showCorrect ? 'action-button answer-button answer-button-correct'
+                : showWrong  ? 'action-button answer-button answer-button-wrong'
+                             : 'action-button answer-button'
+              }
               onClick={() => handleTap(option.id, option.isCorrect)}
               type="button"
             >

@@ -112,7 +112,9 @@
 /* ── HUD / Top Bar ─────────────────────────────────────────────────── */
 
 .top-bar {
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 12px 16px;
   border-radius: 20px;
@@ -497,14 +499,295 @@
   animation: float-bob 2.6s ease-in-out 500ms infinite;
 }
 
+/* ── Intro Screen ──────────────────────────────────────────────────── */
+
+.intro-shell {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 40%, #0d1e38 0%, #040810 70%);
+}
+
+.intro-card {
+  width: min(520px, 100%);
+  display: grid;
+  gap: 20px;
+  padding: 44px 36px 40px;
+  border-radius: 32px;
+  border: 3px solid #253550;
+  background: linear-gradient(170deg, #18243a 0%, #101822 55%, #0a1016 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(120,180,255,0.07),
+    0 28px 0 #06101c,
+    0 40px 80px rgba(0,6,20,0.85),
+    0 0 120px rgba(60,100,200,0.12);
+  text-align: center;
+}
+
+.intro-eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: #6090c0;
+  opacity: 0.85;
+}
+
+.intro-title {
+  margin: 0;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  line-height: 1.1;
+  color: #ffd700;
+  animation: pulse-gold 3.2s ease-in-out infinite;
+}
+
+.intro-tagline {
+  margin: 0;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  line-height: 1.65;
+  color: #90b8d0;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.intro-start-btn {
+  margin-top: 8px;
+  padding: 20px 48px;
+  font-size: 1.25rem;
+  border-radius: 22px;
+  animation: bounce-in 340ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+  align-self: center;
+  justify-self: center;
+  min-width: 200px;
+}
+
+/* ── Menu Screen ───────────────────────────────────────────────────── */
+
+.menu-card {
+  padding: 24px 20px 28px;
+}
+
+.menu-header {
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.menu-title {
+  margin: 0 0 4px;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: #ffd700;
+  animation: pulse-gold 3.2s ease-in-out infinite;
+}
+
+.menu-subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #6090c0;
+}
+
+.episode-list {
+  display: grid;
+  gap: 12px;
+}
+
+.episode-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 2px 12px;
+  align-items: center;
+  padding: 18px 22px;
+  border-radius: 20px;
+  border: 2px solid rgba(80, 120, 200, 0.45);
+  background: linear-gradient(170deg, #141e30 0%, #0c1420 100%);
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.45);
+  transition: transform 90ms ease, box-shadow 90ms ease, border-color 120ms ease;
+  animation: slide-up 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.episode-card:nth-child(1) { animation-delay: 40ms; }
+.episode-card:nth-child(2) { animation-delay: 100ms; }
+.episode-card:nth-child(3) { animation-delay: 160ms; }
+
+.episode-card:not(:disabled):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 rgba(0,0,0,0.45);
+  border-color: rgba(120, 170, 255, 0.6);
+}
+
+.episode-card:not(:disabled):active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.45);
+}
+
+.episode-card-locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(50, 70, 100, 0.3);
+  background: linear-gradient(170deg, #0d1220 0%, #08101a 100%);
+}
+
+.episode-card-done {
+  border-color: rgba(60, 180, 90, 0.45);
+  background: linear-gradient(170deg, #0e2018 0%, #081410 100%);
+}
+
+.episode-label {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #6090c0;
+}
+
+.episode-title {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 900;
+  color: #e8d9a0;
+  line-height: 1.3;
+}
+
+.episode-meta {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #7090a8;
+  white-space: nowrap;
+}
+
+.episode-card-done .episode-meta {
+  color: #50c870;
+}
+
+.menu-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.trophy-button {
+  background: linear-gradient(180deg, #a070e0 0%, #6030b0 100%);
+  border-color: #3a1880;
+  color: #f0e0ff;
+  box-shadow: 0 8px 0 #1e0860, inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.trophy-button:hover {
+  box-shadow: 0 11px 0 #1e0860, inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.trophy-button:active {
+  box-shadow: 0 3px 0 #1e0860, inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* ── Back Button ───────────────────────────────────────────────────── */
+
+.back-button {
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 2px solid rgba(60, 90, 140, 0.5);
+  background: rgba(14, 22, 40, 0.8);
+  color: #90b0d0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
+  transition: transform 90ms ease, box-shadow 90ms ease, color 120ms ease;
+}
+
+.back-button:hover {
+  color: #c8dff0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.4);
+}
+
+.back-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.4);
+}
+
+/* ── Trophy Screen ─────────────────────────────────────────────────── */
+
+.trophy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.trophy-title {
+  margin: 0;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  color: #ffd700;
+  animation: pulse-gold 3.2s ease-in-out infinite;
+}
+
+.trophy-empty {
+  margin: 0;
+  padding: 28px 20px;
+  color: #6080a0;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  border-radius: 16px;
+  border: 2px dashed rgba(60, 90, 140, 0.3);
+}
+
+.trophy-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.trophy-item {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 2px solid rgba(200, 160, 40, 0.4);
+  background: linear-gradient(170deg, #1e1600 0%, #120e00 100%);
+  animation: slide-up 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.trophy-item-label {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #ffd060;
+}
+
+.trophy-item-desc {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #a08840;
+  line-height: 1.45;
+}
+
 /* ── Responsive ────────────────────────────────────────────────────── */
 
-@media (min-width: 900px) {
-  .top-bar {
-    grid-template-columns: 1fr auto;
-    align-items: start;
-  }
-}
 
 @media (max-width: 640px) {
   .game-card,

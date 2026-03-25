@@ -2,8 +2,6 @@ import type {
   SkillProfile,
   MathLevelText,
   ReadingLevelText,
-  MathSkillLevel,
-  ReadingSkillLevel,
 } from './skillLevel'
 
 export type GradeBand = '1-2' | '3-4' | '5'

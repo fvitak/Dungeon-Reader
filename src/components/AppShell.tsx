@@ -38,7 +38,7 @@ export function AppShell() {
     )
   }
 
-  const visibleScene = getSceneForGrade(currentScene, gameState.gradeBand)
+  const visibleScene = getSceneForGrade(currentScene as StoryScene, gameState.gradeBand)
   const pageNumber = storyScenes.findIndex((s) => s.id === currentScene.id) + 1
   const totalPages = storyScenes.length
 
