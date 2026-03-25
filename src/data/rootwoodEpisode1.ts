@@ -68,19 +68,19 @@ export const rootwoodEpisode1: RootwoodScene[] = [
       type: 'challenge',
       skillType: 'reading',
       promptByLevel: {
-        R1: 'Cobb said the door was NOT here before. What is strange about it?',
-        R3: 'Cobb says doors do not just appear. What made this door show up?',
-        R6: 'Cobb is not surprised. What does that tell you about Rootwood?',
+        R1: 'What is strange about the door?',
+        R3: 'Why is the door surprising?',
+        R6: 'What does Cobb mean when he says doors do not just appear?',
       },
       hintByLevel: {
-        R1: 'Think about what Cobb just told you — was this door always here?',
-        R3: 'This is a magic school. What could make a door appear?',
-        R6: 'If an owl who has lived here 400 years is not shocked, what kind of place must this be?',
+        R1: 'Think back — was this door here when you first walked in?',
+        R3: 'Cobb has lived here for hundreds of years. Has he seen this door before?',
+        R6: 'Cobb says something impossible just happened. What is it?',
       },
       options: [
-        { id: 'opt-a', text: 'It appeared out of nowhere',  isCorrect: true  },
-        { id: 'opt-b', text: 'It is very small',            isCorrect: false },
-        { id: 'opt-c', text: 'It is the wrong color',       isCorrect: false },
+        { id: 'opt-a', text: 'It appeared out of nowhere', isCorrect: true  },
+        { id: 'opt-b', text: 'It is very old',             isCorrect: false },
+        { id: 'opt-c', text: 'It is the wrong color',      isCorrect: false },
       ],
       successSceneId: 'rw1-knot-puzzle',
       failureSceneId: 'rw1-cobb-notices',
@@ -98,7 +98,8 @@ export const rootwoodEpisode1: RootwoodScene[] = [
     id: 'rw1-knot-puzzle',
     text: [
       'The door has a knotted vine across it.',
-      'Cobb squints. "Seven knots on the left. Six on the right. How many in all?"',
+      'Seven knots on the left. Six on the right.',
+      'The door counts every knot before it opens.',
     ],
     image: {
       src: img('knot-puzzle'),
@@ -108,16 +109,16 @@ export const rootwoodEpisode1: RootwoodScene[] = [
       type: 'challenge',
       skillType: 'math',
       promptByLevel: {
-        M1: 'There are 3 knots on the left and 2 on the right. How many knots in all?',
-        M2: 'There are 7 knots on the left and 6 on the right. How many knots in all?',
+        M1: 'Count all the knots. How many does the door need?',
+        M2: 'How many knots does the door need to count?',
         M4: 'What is 7 + 6?',
-        M5: 'There are 7 knots, then 6 more, then 2 fall off. How many are left?',
+        M5: '7 + 6 = ?',
       },
       hintByLevel: {
-        M1: 'Count all the knots together: 1, 2, 3 ... keep going!',
-        M2: 'Start at 7 and count on 6 more fingers.',
+        M1: 'Count the left knots, then the right ones, then put them together.',
+        M2: 'Start at 7 and count on 6 more.',
         M4: 'Try making a ten first: 7 + 3 = 10, then add 3 more.',
-        M5: 'First add 7 + 6. Then take away 2.',
+        M5: 'Add left and right, then check your work.',
       },
       options: [
         { id: 'knot-a', text: '11', isCorrect: false },
@@ -198,26 +199,26 @@ export const rootwoodEpisode1: RootwoodScene[] = [
   {
     id: 'rw1-door-lock',
     text: [
-      'Numbers glow on the door. There is one missing.',
+      'Numbers glow on the door: 10 − ? = 3.',
       '"Fill in the blank," says Cobb. "And the door opens."',
     ],
     image: {
       src: img('door-glow'),
-      alt: 'The door showing a glowing number puzzle with a blank space pulsing with light',
+      alt: 'The door showing a glowing equation with a blank space pulsing with light',
     },
     event: {
       type: 'challenge',
       skillType: 'math',
       promptByLevel: {
-        M1: '5 take away something equals 3. Pick the missing number.',
-        M2: '10 take away something equals 3. What is the missing number?',
-        M3: 'The door shows: 10 − ? = 3. What fills the blank?',
+        M1: 'The door shows 10 take away something equals 3. Which number fills the blank?',
+        M2: '10 take away what number leaves 3?',
+        M3: '10 − ? = 3. What is the missing number?',
         M4: 'Solve: 10 − ? = 3',
       },
       hintByLevel: {
-        M1: 'Start at 5. Count back until you reach 3. How many steps was that?',
-        M2: 'Start at 10. Count back until you reach 3.',
-        M3: 'Think: what number added to 3 makes 10?',
+        M1: 'Start at 10. Count back until you reach 3. How many steps was that?',
+        M2: 'Count back from 10 until you get to 3.',
+        M3: 'Think: what number plus 3 equals 10?',
         M4: 'Rearrange it: 10 − 3 = ?',
       },
       options: [
