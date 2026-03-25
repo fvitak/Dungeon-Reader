@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="shaft" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#1a1008"/>
+      <stop offset="100%" stop-color="#06030a"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#shaft)"/>
+  <!-- Vertical shaft walls -->
+  <path d="M0,0 L0,500 L180,500 L180,0Z" fill="#0e0806"/>
+  <path d="M800,0 L800,500 L620,500 L620,0Z" fill="#0e0806"/>
+  <!-- Wall texture (horizontal root lines) -->
+  <path d="M0,80 Q90,72 180,80" stroke="#180c04" stroke-width="8" fill="none"/>
+  <path d="M0,160 Q90,152 180,160" stroke="#180c04" stroke-width="6" fill="none"/>
+  <path d="M0,240 Q90,232 180,240" stroke="#180c04" stroke-width="8" fill="none"/>
+  <path d="M0,320 Q90,312 180,320" stroke="#180c04" stroke-width="6" fill="none"/>
+  <path d="M0,400 Q90,392 180,400" stroke="#180c04" stroke-width="8" fill="none"/>
+  <path d="M620,80 Q710,72 800,80" stroke="#180c04" stroke-width="8" fill="none"/>
+  <path d="M620,160 Q710,152 800,160" stroke="#180c04" stroke-width="6" fill="none"/>
+  <path d="M620,240 Q710,232 800,240" stroke="#180c04" stroke-width="8" fill="none"/>
+  <path d="M620,320 Q710,312 800,320" stroke="#180c04" stroke-width="6" fill="none"/>
+  <path d="M620,400 Q710,392 800,400" stroke="#180c04" stroke-width="8" fill="none"/>
+  <!-- Glow marks on walls (rune levels) -->
+  <circle cx="160" cy="80" r="6" fill="#3a6a20" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="160" cy="160" r="5" fill="#3a6a20" opacity="0.5"/>
+  <circle cx="160" cy="240" r="6" fill="#2a5218" opacity="0.4"/>
+  <circle cx="640" cy="80" r="6" fill="#3a6a20" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="640" cy="160" r="5" fill="#3a6a20" opacity="0.5"/>
+  <circle cx="640" cy="240" r="6" fill="#2a5218" opacity="0.4"/>
+  <!-- THE LIFTVINE (massive central vine) -->
+  <path d="M380,0 Q370,100 385,200 Q395,300 380,400 Q370,450 380,500" stroke="#1e3a0a" stroke-width="45" fill="none"/>
+  <path d="M380,0 Q370,100 385,200 Q395,300 380,400 Q370,450 380,500" stroke="#3a6a18" stroke-width="35" fill="none"/>
+  <path d="M380,0 Q370,100 385,200 Q395,300 380,400 Q370,450 380,500" stroke="#4a8022" stroke-width="20" fill="none"/>
+  <path d="M380,0 Q370,100 385,200 Q395,300 380,400 Q370,450 380,500" stroke="#5a9228" stroke-width="8" fill="none"/>
+  <!-- Vine texture strands -->
+  <path d="M375,0 Q365,100 380,200" stroke="#6ab030" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M390,0 Q380,100 395,200" stroke="#3a5818" stroke-width="2" fill="none" opacity="0.4"/>
+  <!-- Vine glow marks (runelights) -->
+  <circle cx="382" cy="85" r="8" fill="#a0d040" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="386" cy="185" r="8" fill="#80c030" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="382" cy="285" r="7" fill="#60a020" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="379" cy="385" r="7" fill="#508018" opacity="0.5"/>
+  <!-- THE PLATFORM (woven basket) -->
+  <rect x="220" y="280" width="320" height="90" rx="10" fill="#2a1808"/>
+  <rect x="225" y="284" width="310" height="82" rx="8" fill="#3a2010"/>
+  <!-- Platform weave pattern -->
+  <line x1="265" y1="284" x2="265" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="305" y1="284" x2="305" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="345" y1="284" x2="345" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="385" y1="284" x2="385" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="425" y1="284" x2="425" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="465" y1="284" x2="465" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="505" y1="284" x2="505" y2="366" stroke="#2a1808" stroke-width="3"/>
+  <line x1="225" y1="305" x2="535" y2="305" stroke="#2a1808" stroke-width="2"/>
+  <line x1="225" y1="325" x2="535" y2="325" stroke="#2a1808" stroke-width="2"/>
+  <line x1="225" y1="345" x2="535" y2="345" stroke="#2a1808" stroke-width="2"/>
+  <!-- Platform railing vines -->
+  <path d="M220,280 Q240,260 260,280" stroke="#4a6a18" stroke-width="6" fill="none"/>
+  <path d="M220,280 L220,340" stroke="#4a6a18" stroke-width="6"/>
+  <path d="M540,280 Q520,260 500,280" stroke="#4a6a18" stroke-width="6" fill="none"/>
+  <path d="M540,280 L540,340" stroke="#4a6a18" stroke-width="6"/>
+  <!-- Platform connecting to vine -->
+  <path d="M375,280 L380,285" stroke="#5a9228" stroke-width="12"/>
+  <!-- Glow rings on platform (magical lift runes) -->
+  <ellipse cx="380" cy="325" rx="40" ry="15" fill="none" stroke="#4a8020" stroke-width="2" opacity="0.4"/>
+  <!-- Above — shaft opening glow (from upper floor) -->
+  <ellipse cx="400" cy="0" rx="150" ry="40" fill="#3a6a18" opacity="0.15"/>
+  <!-- Below — darkness of the Underbranch -->
+  <ellipse cx="400" cy="500" rx="130" ry="30" fill="#06020a" opacity="0.8"/>
+  <!-- Slight shake effect (wobble) — subtle displacement lines -->
+  <path d="M218,282 L222,278" stroke="#5a9228" stroke-width="2" opacity="0.5"/>
+  <path d="M538,282 L542,278" stroke="#5a9228" stroke-width="2" opacity="0.5"/>
+</svg>

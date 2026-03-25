@@ -1,4 +1,71 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Door Open</text>
+  <defs>
+    <radialGradient id="room-glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ff4400" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="room-bg" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#3a2010"/>
+      <stop offset="100%" stop-color="#1a0c04"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigglow"><feGaussianBlur stdDeviation="16" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- Dark corridor -->
+  <rect width="800" height="500" fill="#06030e"/>
+  <path d="M0,0 L160,0 L170,500 L0,500Z" fill="#1a0c04"/>
+  <path d="M800,0 L640,0 L630,500 L800,500Z" fill="#1a0c04"/>
+  <!-- Door frame (open, swung right) -->
+  <path d="M175,10 Q180,15 165,250 Q155,420 170,490 L200,495 Q185,420 195,250 Q212,20 200,10Z" fill="#2a1808" opacity="0.9"/>
+  <!-- Door edge perspective -->
+  <path d="M200,10 Q210,12 195,250 Q185,420 200,495" stroke="#4a2810" stroke-width="3" fill="none"/>
+  <!-- Glorious warm light from inside the room -->
+  <ellipse cx="490" cy="250" rx="320" ry="250" fill="url(#room-glow)"/>
+  <!-- Room background -->
+  <rect x="175" y="0" width="625" height="500" fill="url(#room-bg)"/>
+  <!-- Room ceiling and walls -->
+  <path d="M175,0 L800,0 L800,50 Q490,30 175,50Z" fill="#220e06" opacity="0.6"/>
+  <path d="M775,50 L775,500" stroke="#2a1206" stroke-width="4" opacity="0.5"/>
+  <!-- Glowing orbs floating in room (the floating lights!) -->
+  <circle cx="350" cy="120" r="22" fill="#ffd700" opacity="0.9" filter="url(#bigglow)"/>
+  <circle cx="350" cy="120" r="12" fill="#ffffa0"/>
+  <circle cx="500" cy="80" r="18" fill="#ffd700" opacity="0.8" filter="url(#bigglow)"/>
+  <circle cx="500" cy="80" r="10" fill="#ffffc0"/>
+  <circle cx="620" cy="140" r="15" fill="#ffaa30" opacity="0.8" filter="url(#bigglow)"/>
+  <circle cx="620" cy="140" r="8" fill="#ffe090"/>
+  <circle cx="420" cy="180" r="12" fill="#ffd700" opacity="0.7" filter="url(#bigglow)"/>
+  <circle cx="420" cy="180" r="6" fill="#ffffa0"/>
+  <circle cx="560" cy="220" r="10" fill="#ffcc00" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="560" cy="220" r="5" fill="#ffffc0"/>
+  <circle cx="680" cy="200" r="14" fill="#ff8c00" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="680" cy="200" r="7" fill="#ffd080"/>
+  <circle cx="310" cy="220" r="8" fill="#ffd700" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="740" cy="160" r="10" fill="#ffd700" opacity="0.55" filter="url(#glow)"/>
+  <!-- Orb trails/strings -->
+  <path d="M350,142 L348,220" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
+  <path d="M500,98 L498,180" stroke="#ffd700" stroke-width="1" opacity="0.25"/>
+  <path d="M620,155 L618,240" stroke="#ffaa30" stroke-width="1" opacity="0.25"/>
+  <!-- PIP asleep in center (tiny creature) -->
+  <!-- The nest/bed -->
+  <ellipse cx="490" cy="390" rx="55" ry="25" fill="#1e1208" stroke="#3a2010" stroke-width="2"/>
+  <ellipse cx="490" cy="386" rx="45" ry="18" fill="#2a1a0a"/>
+  <!-- Tiny sleeping creature body -->
+  <ellipse cx="488" cy="378" rx="30" ry="18" fill="#3a6a20"/>
+  <ellipse cx="488" cy="374" rx="22" ry="16" fill="#4a8a28"/>
+  <!-- Creature head -->
+  <circle cx="512" cy="370" r="16" fill="#3a6a20"/>
+  <circle cx="512" cy="368" r="13" fill="#4a8a28"/>
+  <!-- Eyes closed (just a line) -->
+  <path d="M506,368 Q512,371 518,368" stroke="#1e3a10" stroke-width="2" fill="none"/>
+  <!-- Tiny backpack -->
+  <rect x="483" y="362" width="16" height="14" rx="3" fill="#8a4a18" stroke="#6a3010" stroke-width="1"/>
+  <!-- Zzz sleepy bubbles -->
+  <text x="530" y="355" fill="#a0d060" font-size="14" font-family="sans-serif" opacity="0.7">z</text>
+  <text x="542" y="342" fill="#a0d060" font-size="18" font-family="sans-serif" opacity="0.5">z</text>
+  <text x="558" y="326" fill="#a0d060" font-size="22" font-family="sans-serif" opacity="0.35">z</text>
+  <!-- Floor glow from all the orbs -->
+  <ellipse cx="490" cy="490" rx="280" ry="25" fill="#ffd700" opacity="0.08"/>
+  <!-- Doorway light spill into corridor -->
+  <path d="M175,0 L175,500 L120,500 L130,0Z" fill="#ffd700" opacity="0.05"/>
 </svg>

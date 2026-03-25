@@ -1,4 +1,98 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Cobb's Perch</text>
+  <defs>
+    <radialGradient id="moonlight" cx="50%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#2a1860"/>
+      <stop offset="100%" stop-color="#04020e"/>
+    </radialGradient>
+    <radialGradient id="eye-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcc00"/>
+      <stop offset="60%" stop-color="#ff8800" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ff8800" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="biglow"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#moonlight)"/>
+  <!-- Stars and moon -->
+  <circle cx="650" cy="60" r="30" fill="#ffe8b0" opacity="0.9"/>
+  <circle cx="650" cy="60" r="28" fill="#fff5d0"/>
+  <circle cx="635" cy="50" r="5" fill="#ffe8a0" opacity="0.4"/>
+  <!-- Moon glow -->
+  <ellipse cx="650" cy="60" rx="70" ry="70" fill="#ffe8a0" opacity="0.08"/>
+  <!-- Stars -->
+  <circle cx="80" cy="40" r="1.5" fill="#fff" opacity="0.9"/>
+  <circle cx="150" cy="70" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="200" cy="30" r="2" fill="#e0d0ff" opacity="0.8"/>
+  <circle cx="320" cy="50" r="1.5" fill="#fff" opacity="0.7"/>
+  <circle cx="480" cy="20" r="1" fill="#fff" opacity="0.9"/>
+  <circle cx="720" cy="140" r="1" fill="#fff" opacity="0.7"/>
+  <circle cx="750" cy="180" r="1.5" fill="#e8d8ff" opacity="0.8"/>
+  <circle cx="100" cy="140" r="1" fill="#fff" opacity="0.6"/>
+  <!-- Purple aurora streaks -->
+  <path d="M0,120 Q200,80 400,100 Q600,120 800,90" stroke="#9d4edd" stroke-width="3" fill="none" opacity="0.15"/>
+  <path d="M0,140 Q200,110 400,125 Q600,140 800,115" stroke="#6030b0" stroke-width="2" fill="none" opacity="0.1"/>
+  <!-- Background trees silhouette -->
+  <path d="M0,500 Q50,400 60,300 Q70,250 80,230 Q90,250 100,300 Q110,400 120,500Z" fill="#0a0518" opacity="0.6"/>
+  <path d="M700,500 Q720,420 710,340 Q720,300 730,280 Q740,300 750,340 Q740,420 760,500Z" fill="#0a0518" opacity="0.5"/>
+  <path d="M0,420 Q150,380 200,350 Q250,380 300,500" fill="#0a0518" opacity="0.4"/>
+  <!-- The perch branch (dramatic diagonal) -->
+  <path d="M50,320 Q200,280 350,250 Q480,230 600,260 Q700,280 780,300" stroke="#2d1808" stroke-width="35" fill="none" stroke-linecap="round"/>
+  <path d="M50,322 Q200,282 350,252 Q480,232 600,262 Q700,282 780,302" stroke="#4a2810" stroke-width="25" fill="none" stroke-linecap="round"/>
+  <path d="M50,320 Q200,280 350,250 Q480,230 600,260 Q700,280 780,300" stroke="#5a3214" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Branch texture -->
+  <path d="M150,300 Q180,295 210,300" stroke="#3a1e08" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M300,265 Q340,260 370,262" stroke="#3a1e08" stroke-width="3" fill="none" opacity="0.4"/>
+  <!-- Hanging branch -->
+  <path d="M380,250 Q370,310 360,380 Q350,420 370,460" stroke="#2d1808" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M380,250 Q370,310 360,380" stroke="#5a3214" stroke-width="4" fill="none"/>
+  <!-- Leaves on branch -->
+  <ellipse cx="345" cy="470" rx="18" ry="8" fill="#1e3a0a" opacity="0.8"/>
+  <ellipse cx="372" cy="465" rx="15" ry="6" fill="#1e3a0a" opacity="0.7"/>
+  <!-- COBB THE OWL -->
+  <!-- Body -->
+  <ellipse cx="390" cy="215" rx="42" ry="52" fill="#2a1a08"/>
+  <!-- Wing details -->
+  <path d="M350,220 Q330,240 340,270 Q360,255 380,240Z" fill="#1e1204"/>
+  <path d="M430,220 Q450,240 440,270 Q420,255 400,240Z" fill="#1e1204"/>
+  <!-- Belly lighter patch -->
+  <ellipse cx="390" cy="230" rx="22" ry="28" fill="#4a3018" opacity="0.6"/>
+  <!-- Head -->
+  <ellipse cx="390" cy="178" rx="34" ry="30" fill="#2a1a08"/>
+  <!-- Ear tufts -->
+  <path d="M362,155 L358,130 L374,150Z" fill="#2a1a08"/>
+  <path d="M418,155 L422,130 L406,150Z" fill="#2a1a08"/>
+  <!-- Face disk -->
+  <ellipse cx="390" cy="182" rx="26" ry="22" fill="#4a3020" opacity="0.7"/>
+  <!-- Eyes - LEFT with glow -->
+  <ellipse cx="376" cy="178" rx="11" ry="13" fill="#1a0e04"/>
+  <ellipse cx="376" cy="178" rx="9" ry="11" fill="#ffcc00" opacity="0.95"/>
+  <ellipse cx="376" cy="178" rx="6" ry="7" fill="#ff8800"/>
+  <ellipse cx="376" cy="178" rx="3.5" ry="4" fill="#1a0800"/>
+  <ellipse cx="374" cy="176" rx="1.5" ry="1.5" fill="#fff" opacity="0.8"/>
+  <!-- Eye glow left -->
+  <ellipse cx="376" cy="178" rx="16" ry="18" fill="#ffcc00" opacity="0.15" filter="url(#glow)"/>
+  <!-- Eyes - RIGHT with glow -->
+  <ellipse cx="404" cy="178" rx="11" ry="13" fill="#1a0e04"/>
+  <ellipse cx="404" cy="178" rx="9" ry="11" fill="#ffcc00" opacity="0.95"/>
+  <ellipse cx="404" cy="178" rx="6" ry="7" fill="#ff8800"/>
+  <ellipse cx="404" cy="178" rx="3.5" ry="4" fill="#1a0800"/>
+  <ellipse cx="402" cy="176" rx="1.5" ry="1.5" fill="#fff" opacity="0.8"/>
+  <ellipse cx="404" cy="178" rx="16" ry="18" fill="#ffcc00" opacity="0.15" filter="url(#glow)"/>
+  <!-- Beak -->
+  <path d="M385,192 Q390,200 395,192 Q390,187 385,192Z" fill="#c08020"/>
+  <!-- Feather detail lines -->
+  <path d="M370,220 Q380,215 390,218" stroke="#3a2810" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M390,218 Q400,215 410,220" stroke="#3a2810" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M365,235 Q380,228 395,232" stroke="#3a2810" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <!-- Talons on branch -->
+  <path d="M365,262 Q358,278 350,285 Q355,288 362,284 Q365,295 372,285Z" fill="#2a1808"/>
+  <path d="M415,262 Q422,278 430,285 Q425,288 418,284 Q415,295 408,285Z" fill="#2a1808"/>
+  <!-- Magical rune glow on branch -->
+  <circle cx="280" cy="268" r="4" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="500" cy="255" r="4" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="200" cy="282" r="3" fill="#6030b0" opacity="0.5"/>
+  <!-- Fog/mist at bottom -->
+  <path d="M0,500 Q200,440 400,460 Q600,440 800,500L800,500L0,500Z" fill="#0d0820" opacity="0.6"/>
+  <!-- "Cobb" label -->
+  <text x="390" y="158" text-anchor="middle" fill="#ffcc00" font-size="11" font-family="sans-serif" font-weight="bold" opacity="0.6">COBB</text>
 </svg>

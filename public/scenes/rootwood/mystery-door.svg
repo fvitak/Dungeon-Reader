@@ -1,4 +1,76 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Mystery Door</text>
+  <defs>
+    <radialGradient id="corridor" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#2a1a08"/>
+      <stop offset="100%" stop-color="#08040e"/>
+    </radialGradient>
+    <radialGradient id="door-aura" cx="50%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#9d4edd" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#6020a0" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#6020a0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="crack-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- Corridor background -->
+  <rect width="800" height="500" fill="#06030e"/>
+  <rect width="800" height="500" fill="url(#corridor)"/>
+  <!-- Corridor walls - living wood texture left -->
+  <path d="M0,0 L120,0 L140,500 L0,500Z" fill="#1a0c04"/>
+  <path d="M120,0 L180,0 Q200,250 180,500 L140,500Z" fill="#0e0804" opacity="0.8"/>
+  <!-- Wall right -->
+  <path d="M800,0 L680,0 L660,500 L800,500Z" fill="#1a0c04"/>
+  <path d="M680,0 L620,0 Q600,250 620,500 L660,500Z" fill="#0e0804" opacity="0.8"/>
+  <!-- Ceiling (root lattice) -->
+  <path d="M0,0 L800,0 L800,60 Q400,40 0,60Z" fill="#120804"/>
+  <path d="M100,0 Q120,40 110,80" stroke="#1e1006" stroke-width="8" fill="none" opacity="0.8"/>
+  <path d="M300,0 Q310,35 295,75" stroke="#1e1006" stroke-width="6" fill="none" opacity="0.7"/>
+  <path d="M500,0 Q490,35 505,75" stroke="#1e1006" stroke-width="6" fill="none" opacity="0.7"/>
+  <path d="M700,0 Q680,40 690,80" stroke="#1e1006" stroke-width="8" fill="none" opacity="0.8"/>
+  <!-- Glowing root lines in floor -->
+  <path d="M0,480 Q200,460 400,465 Q600,460 800,480" stroke="#4a2a08" stroke-width="3" fill="none" opacity="0.7"/>
+  <path d="M0,495 Q200,475 400,480 Q600,475 800,495" stroke="#3a1e04" stroke-width="2" fill="none" opacity="0.5"/>
+  <!-- Dim amber wall sconces -->
+  <circle cx="160" cy="200" r="8" fill="#ff8820" opacity="0.4" filter="url(#glow)"/>
+  <rect cx="155" cy="195" x="155" y="195" width="10" height="15" rx="3" fill="#2a1a08" opacity="0.8"/>
+  <circle cx="640" cy="200" r="8" fill="#ff8820" opacity="0.4" filter="url(#glow)"/>
+  <rect x="635" y="195" width="10" height="15" rx="3" fill="#2a1a08" opacity="0.8"/>
+  <!-- Door aura -->
+  <ellipse cx="400" cy="300" rx="180" ry="210" fill="url(#door-aura)"/>
+  <!-- The Mystery Door -->
+  <!-- Door frame (living wood) -->
+  <path d="M285,500 L285,210 Q285,150 400,140 Q515,150 515,210 L515,500Z" fill="#0e0604"/>
+  <!-- Door slab -->
+  <rect x="300" y="165" width="200" height="335" rx="0" fill="#1a0e06"/>
+  <!-- Wood grain on door -->
+  <path d="M320,180 Q315,300 322,440" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M360,175 Q355,300 362,445" stroke="#1e1208" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M400,172 Q400,300 400,447" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M440,175 Q445,300 438,445" stroke="#1e1208" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M480,180 Q485,300 478,440" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.6"/>
+  <!-- GLOWING CRACKS — purple energy seeping through -->
+  <!-- Top crack -->
+  <path d="M360,168 Q375,180 390,172 Q400,165 415,175 Q430,182 440,168" stroke="#9d4edd" stroke-width="2.5" fill="none" filter="url(#crack-glow)"/>
+  <path d="M360,168 Q375,180 390,172 Q400,165 415,175 Q430,182 440,168" stroke="#c890ff" stroke-width="1" fill="none" opacity="0.8"/>
+  <!-- Left crack -->
+  <path d="M302,240 Q315,255 308,280 Q300,308 312,330" stroke="#9d4edd" stroke-width="2" fill="none" filter="url(#crack-glow)"/>
+  <path d="M302,240 Q315,255 308,280 Q300,308 312,330" stroke="#c890ff" stroke-width="0.8" fill="none" opacity="0.7"/>
+  <!-- Right crack -->
+  <path d="M498,260 Q485,278 492,300 Q500,328 488,350" stroke="#9d4edd" stroke-width="2" fill="none" filter="url(#crack-glow)"/>
+  <path d="M498,260 Q485,278 492,300 Q500,328 488,350" stroke="#c890ff" stroke-width="0.8" fill="none" opacity="0.7"/>
+  <!-- Middle diagonal crack -->
+  <path d="M340,300 Q365,320 350,345 Q360,370 340,390" stroke="#7830c0" stroke-width="1.5" fill="none" filter="url(#crack-glow)"/>
+  <!-- Door handle (glowing rune circle) -->
+  <circle cx="480" cy="330" r="12" fill="#0e0604" stroke="#9d4edd" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="480" cy="330" r="6" fill="#9d4edd" opacity="0.5"/>
+  <!-- Arch above door -->
+  <path d="M285,210 Q285,150 400,140 Q515,150 515,210" stroke="#3a1808" stroke-width="8" fill="none"/>
+  <path d="M287,209 Q287,152 400,142 Q513,152 513,209" stroke="#6a3020" stroke-width="2" fill="none" opacity="0.6"/>
+  <!-- Floating purple particles -->
+  <circle cx="340" cy="220" r="2.5" fill="#9d4edd" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="460" cy="200" r="2" fill="#c060ff" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="380" cy="180" r="2" fill="#9d4edd" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="420" cy="190" r="1.5" fill="#e080ff" opacity="0.7"/>
+  <circle cx="350" cy="380" r="2" fill="#7830c0" opacity="0.5"/>
+  <circle cx="455" cy="400" r="1.5" fill="#7830c0" opacity="0.4"/>
 </svg>

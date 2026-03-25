@@ -1,4 +1,83 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Knot Puzzle</text>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1a1006"/>
+      <stop offset="100%" stop-color="#06030e"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Door behind (darker) -->
+  <rect x="200" y="0" width="400" height="500" fill="#0e0804" opacity="0.9"/>
+  <path d="M200,0 L200,500" stroke="#2a1a08" stroke-width="4"/>
+  <path d="M600,0 L600,500" stroke="#2a1a08" stroke-width="4"/>
+  <!-- Wood grain vertical lines on door -->
+  <path d="M240,0 L242,500" stroke="#1a1006" stroke-width="1.5" opacity="0.5"/>
+  <path d="M290,0 L288,500" stroke="#1a1006" stroke-width="1" opacity="0.4"/>
+  <path d="M340,0 L341,500" stroke="#1a1006" stroke-width="1.5" opacity="0.5"/>
+  <path d="M400,0 L400,500" stroke="#1a1006" stroke-width="2" opacity="0.4"/>
+  <path d="M460,0 L459,500" stroke="#1a1006" stroke-width="1.5" opacity="0.5"/>
+  <path d="M520,0 L521,500" stroke="#1a1006" stroke-width="1" opacity="0.4"/>
+  <path d="M560,0 L558,500" stroke="#1a1006" stroke-width="1.5" opacity="0.5"/>
+  <!-- The vine across the door -->
+  <!-- Main vine left side (7 knots) -->
+  <path d="M100,250 Q150,220 200,235 Q240,248 280,238 Q310,228 340,245 Q370,260 400,248" stroke="#3d5a1a" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M100,250 Q150,220 200,235 Q240,248 280,238 Q310,228 340,245 Q370,260 400,248" stroke="#5a8a28" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M100,250 Q150,220 200,235 Q240,248 280,238 Q310,228 340,245 Q370,260 400,248" stroke="#2a4012" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- Knots left side (7) — small circle bumps -->
+  <circle cx="128" cy="248" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="128" cy="248" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="128" y="253" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">1</text>
+  <circle cx="168" cy="236" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="168" cy="236" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="168" y="241" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">2</text>
+  <circle cx="210" cy="238" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="210" cy="238" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="210" y="243" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">3</text>
+  <circle cx="250" cy="242" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="250" cy="242" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="250" y="247" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">4</text>
+  <circle cx="288" cy="236" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="288" cy="236" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="288" y="241" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">5</text>
+  <circle cx="325" cy="242" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="325" cy="242" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="325" y="247" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">6</text>
+  <circle cx="362" cy="250" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="362" cy="250" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="362" y="255" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">7</text>
+  <!-- Main vine right side (6 knots) -->
+  <path d="M400,248 Q430,236 460,248 Q490,260 520,248 Q550,236 580,245 Q620,255 660,245 Q700,235 740,250" stroke="#3d5a1a" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M400,248 Q430,236 460,248 Q490,260 520,248 Q550,236 580,245 Q620,255 660,245 Q700,235 740,250" stroke="#5a8a28" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M400,248 Q430,236 460,248 Q490,260 520,248 Q550,236 580,245 Q620,255 660,245 Q700,235 740,250" stroke="#2a4012" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- Knots right side (6) -->
+  <circle cx="432" cy="242" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="432" cy="242" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="432" y="247" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">1</text>
+  <circle cx="468" cy="250" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="468" cy="250" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="468" y="255" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">2</text>
+  <circle cx="510" cy="244" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="510" cy="244" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="510" y="249" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">3</text>
+  <circle cx="552" cy="238" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="552" cy="238" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="552" y="243" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">4</text>
+  <circle cx="592" cy="246" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="592" cy="246" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="592" y="251" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">5</text>
+  <circle cx="636" cy="248" r="14" fill="#4a6a20" stroke="#3a5018" stroke-width="2"/>
+  <circle cx="636" cy="248" r="8" fill="#3a5018" opacity="0.6"/>
+  <text x="636" y="253" text-anchor="middle" fill="#c0ff60" font-size="13" font-family="sans-serif" font-weight="bold">6</text>
+  <!-- Center knot connecting left+right -->
+  <circle cx="400" cy="248" r="20" fill="#6a9030" stroke="#4a6a20" stroke-width="3"/>
+  <circle cx="400" cy="248" r="12" fill="#4a6a20"/>
+  <!-- Vine drapes -->
+  <path d="M120,235 Q130,310 125,400" stroke="#3d5a1a" stroke-width="8" fill="none" opacity="0.5"/>
+  <path d="M665" cy="240" d="M665,240 Q670,320 662,420" stroke="#3d5a1a" stroke-width="8" fill="none" opacity="0.5"/>
+  <!-- Label tags -->
+  <rect x="55" y="190" width="55" height="24" rx="6" fill="#1a2a08" stroke="#5a8a28" stroke-width="1.5"/>
+  <text x="82" y="207" text-anchor="middle" fill="#90d040" font-size="12" font-family="sans-serif" font-weight="bold">7 knots</text>
+  <rect x="690" y="190" width="55" height="24" rx="6" fill="#1a2a08" stroke="#5a8a28" stroke-width="1.5"/>
+  <text x="717" y="207" text-anchor="middle" fill="#90d040" font-size="12" font-family="sans-serif" font-weight="bold">6 knots</text>
 </svg>

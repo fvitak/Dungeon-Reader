@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#120820"/>
+      <stop offset="100%" stop-color="#04020a"/>
+    </radialGradient>
+    <radialGradient id="symbol-aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9d4edd" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#6020b0" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#6020b0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigglow"><feGaussianBlur stdDeviation="16" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Ancient stone wall -->
+  <rect x="80" y="0" width="640" height="500" fill="#0e080c"/>
+  <!-- Stone block lines -->
+  <line x1="80" y1="100" x2="720" y2="100" stroke="#180e14" stroke-width="4" opacity="0.8"/>
+  <line x1="80" y1="200" x2="720" y2="200" stroke="#180e14" stroke-width="4" opacity="0.8"/>
+  <line x1="80" y1="300" x2="720" y2="300" stroke="#180e14" stroke-width="4" opacity="0.8"/>
+  <line x1="80" y1="400" x2="720" y2="400" stroke="#180e14" stroke-width="4" opacity="0.8"/>
+  <line x1="160" y1="50" x2="160" y2="500" stroke="#180e14" stroke-width="3" opacity="0.6"/>
+  <line x1="280" y1="0" x2="280" y2="500" stroke="#180e14" stroke-width="3" opacity="0.6"/>
+  <line x1="520" y1="0" x2="520" y2="500" stroke="#180e14" stroke-width="3" opacity="0.6"/>
+  <line x1="640" y1="50" x2="640" y2="500" stroke="#180e14" stroke-width="3" opacity="0.6"/>
+  <!-- Side walls -->
+  <rect x="0" y="0" width="80" height="500" fill="#080408"/>
+  <rect x="720" y="0" width="80" height="500" fill="#080408"/>
+  <!-- Symbol aura (behind the carved symbol) -->
+  <ellipse cx="400" cy="250" rx="180" ry="180" fill="url(#symbol-aura)"/>
+  <ellipse cx="400" cy="250" rx="100" ry="100" fill="#9d4edd" opacity="0.1" filter="url(#bigglow)"/>
+  <!-- THE CARVED SYMBOL — a door mark / ancient sigil -->
+  <!-- Outer ring -->
+  <circle cx="400" cy="250" r="105" fill="none" stroke="#9d4edd" stroke-width="4" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="400" cy="250" r="103" fill="none" stroke="#c890ff" stroke-width="1.5" opacity="0.7"/>
+  <!-- Inner ring -->
+  <circle cx="400" cy="250" r="70" fill="none" stroke="#7030b0" stroke-width="3" opacity="0.8" filter="url(#glow)"/>
+  <!-- Triangle inscribed (pointing up — ancient door symbol) -->
+  <polygon points="400,158 480,295 320,295" fill="none" stroke="#9d4edd" stroke-width="3.5" opacity="0.9" filter="url(#glow)"/>
+  <polygon points="400,158 480,295 320,295" fill="none" stroke="#e0b0ff" stroke-width="1" opacity="0.7"/>
+  <!-- Inverted triangle (pointing down) — door from other side -->
+  <polygon points="400,342 320,205 480,205" fill="none" stroke="#e91e8c" stroke-width="3" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="400,342 320,205 480,205" fill="none" stroke="#ffb0d8" stroke-width="1" opacity="0.6"/>
+  <!-- Center dot (the heartwood) -->
+  <circle cx="400" cy="250" r="15" fill="#9d4edd" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="400" cy="250" r="8" fill="#e0b0ff"/>
+  <circle cx="400" cy="250" r="4" fill="#ffffff" opacity="0.8"/>
+  <!-- Rune dots around outer ring -->
+  <circle cx="400" cy="145" r="6" fill="#9d4edd" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="491" cy="198" r="5" fill="#9d4edd" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="491" cy="302" r="5" fill="#e91e8c" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="400" cy="355" r="6" fill="#e91e8c" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="309" cy="302" r="5" fill="#e91e8c" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="309" cy="198" r="5" fill="#9d4edd" opacity="0.8" filter="url(#glow)"/>
+  <!-- Radiating cracks from the symbol into the stone -->
+  <path d="M400,145 L398,80" stroke="#6020a0" stroke-width="2" opacity="0.4"/>
+  <path d="M491,198 L540,160" stroke="#6020a0" stroke-width="2" opacity="0.35"/>
+  <path d="M491,302 L545,340" stroke="#6020a0" stroke-width="2" opacity="0.35"/>
+  <path d="M400,355 L402,430" stroke="#6020a0" stroke-width="2" opacity="0.4"/>
+  <path d="M309,302 L255,338" stroke="#6020a0" stroke-width="2" opacity="0.35"/>
+  <path d="M309,198 L257,162" stroke="#6020a0" stroke-width="2" opacity="0.35"/>
+  <!-- COBB (tiny owl silhouette perched below the symbol) -->
+  <ellipse cx="400" cy="440" rx="16" ry="20" fill="#1a0e06"/>
+  <ellipse cx="400" cy="430" rx="13" ry="12" fill="#1a0e06"/>
+  <!-- Cobb tiny eyes (glowing) -->
+  <ellipse cx="394" cy="428" rx="4.5" ry="5" fill="#ffcc00" opacity="0.9" filter="url(#glow)"/>
+  <ellipse cx="406" cy="428" rx="4.5" ry="5" fill="#ffcc00" opacity="0.9" filter="url(#glow)"/>
+  <ellipse cx="394" cy="428" rx="2" ry="2.5" fill="#1a0800"/>
+  <ellipse cx="406" cy="428" rx="2" ry="2.5" fill="#1a0800"/>
+  <!-- Pip (tiny green glow beside Cobb) -->
+  <ellipse cx="430" cy="445" rx="10" ry="12" fill="#2a5218" opacity="0.9"/>
+  <ellipse cx="427" cy="442" rx="4" ry="5" fill="#4ade80" opacity="0.8" filter="url(#glow)"/>
+  <ellipse cx="435" cy="442" rx="4" ry="5" fill="#4ade80" opacity="0.8" filter="url(#glow)"/>
+  <!-- Particle sparks from symbol -->
+  <circle cx="330" cy="195" r="3" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="470" cy="188" r="2.5" fill="#c890ff" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="355" cy="350" r="2.5" fill="#e91e8c" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="448" cy="340" r="2" fill="#e91e8c" opacity="0.6"/>
+  <circle cx="295" cy="258" r="2" fill="#9d4edd" opacity="0.5"/>
+  <circle cx="508" cy="262" r="2.5" fill="#9d4edd" opacity="0.5"/>
+</svg>

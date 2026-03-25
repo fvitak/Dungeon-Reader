@@ -1,4 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Clever Hall</text>
+  <defs>
+    <radialGradient id="bg" cx="55%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#0a0a20"/>
+      <stop offset="100%" stop-color="#04020c"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Door (right, dim glow) -->
+  <rect x="440" y="0" width="230" height="500" fill="#0e0804"/>
+  <path d="M440,0 L440,500" stroke="#3a1808" stroke-width="3"/>
+  <path d="M480,0 L480,500" stroke="#1a1006" stroke-width="1" opacity="0.4"/>
+  <path d="M530,0 L530,500" stroke="#1a1006" stroke-width="1" opacity="0.3"/>
+  <path d="M580,0 L580,500" stroke="#1a1006" stroke-width="1" opacity="0.4"/>
+  <!-- Door seam purple glow (softer than brave path) -->
+  <path d="M440,0 L440,500" stroke="#7030b0" stroke-width="2.5" opacity="0.6" filter="url(#glow)"/>
+  <!-- Mysterious shadow inside door (tiny footprints) -->
+  <!-- Footprint shadows (dark outlines on lighter wood) -->
+  <ellipse cx="510" cy="300" rx="12" ry="18" fill="#0a0604" opacity="0.5" transform="rotate(-10,510,300)"/>
+  <ellipse cx="535" cy="270" rx="10" ry="16" fill="#0a0604" opacity="0.4" transform="rotate(8,535,270)"/>
+  <ellipse cx="525" cy="340" rx="11" ry="17" fill="#0a0604" opacity="0.4" transform="rotate(-5,525,340)"/>
+  <ellipse cx="555" cy="310" rx="10" ry="15" fill="#0a0604" opacity="0.35" transform="rotate(12,555,310)"/>
+  <!-- The head/ear pressed to door (profile silhouette) -->
+  <!-- Person body silhouette (left of door) -->
+  <path d="M380,160 Q420,140 430,200 L430,500 L340,500 L340,200 Q350,150 380,160Z" fill="#0a0618" opacity="0.9"/>
+  <!-- Head -->
+  <ellipse cx="395" cy="185" rx="38" ry="42" fill="#1a0e2a"/>
+  <!-- Ear pressed to door -->
+  <path d="M415,185 Q430,175 438,188 Q440,200 430,208 Q420,212 415,200Z" fill="#2a1838"/>
+  <!-- Hair -->
+  <path d="M360,168 Q365,148 395,145 Q425,148 430,165 Q425,155 395,152 Q368,155 360,168Z" fill="#0a0618"/>
+  <!-- Shoulder -->
+  <path d="M360,220 Q340,240 330,280 L400,280 Q410,250 430,230Z" fill="#120c20"/>
+  <!-- Listening sparkle particles (sound waves detected) -->
+  <circle cx="460" cy="210" r="3" fill="#00d4ff" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="475" cy="190" r="2.5" fill="#00d4ff" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="462" cy="230" r="2" fill="#00d4ff" opacity="0.5" filter="url(#glow)"/>
+  <path d="M455,185 Q470,195 465,210 Q460,225 472,235" stroke="#00d4ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <!-- "sshhh" text subtle -->
+  <text x="250" y="140" text-anchor="middle" fill="#00d4ff" font-size="32" font-family="sans-serif" font-style="italic" opacity="0.35">shhh...</text>
+  <!-- Small owl (Cobb) watching -->
+  <ellipse cx="180" cy="300" rx="22" ry="26" fill="#1a0e04" opacity="0.8"/>
+  <ellipse cx="180" cy="288" rx="18" ry="16" fill="#1a0e04" opacity="0.8"/>
+  <circle cx="172" cy="286" r="7" fill="#ffcc00" opacity="0.8"/>
+  <circle cx="172" cy="286" r="4" fill="#1a0800"/>
+  <circle cx="188" cy="286" r="7" fill="#ffcc00" opacity="0.8"/>
+  <circle cx="188" cy="286" r="4" fill="#1a0800"/>
 </svg>

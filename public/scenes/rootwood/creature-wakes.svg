@@ -1,4 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Creature Wakes</text>
+  <defs>
+    <radialGradient id="room" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#3a2010"/>
+      <stop offset="100%" stop-color="#1a0c04"/>
+    </radialGradient>
+    <radialGradient id="eye-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigglow"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#room)"/>
+  <!-- Floating orbs (background, dim) -->
+  <circle cx="120" cy="100" r="15" fill="#ffd700" opacity="0.4" filter="url(#glow)"/>
+  <circle cx="680" cy="80" r="12" fill="#ffaa30" opacity="0.35" filter="url(#glow)"/>
+  <circle cx="750" cy="200" r="10" fill="#ffd700" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="60" cy="320" r="8" fill="#ffcc00" opacity="0.3" filter="url(#glow)"/>
+  <circle cx="200" cy="60" r="10" fill="#ffd700" opacity="0.35"/>
+  <!-- The nest -->
+  <ellipse cx="400" cy="400" rx="110" ry="45" fill="#160e04"/>
+  <ellipse cx="400" cy="395" rx="95" ry="35" fill="#1e1208"/>
+  <!-- Creature body sitting up -->
+  <ellipse cx="400" cy="330" rx="60" ry="50" fill="#2a5218"/>
+  <ellipse cx="400" cy="325" rx="52" ry="44" fill="#3a6a22"/>
+  <!-- Tiny arms -->
+  <path d="M345,330 Q320,310 310,330 Q320,348 345,345Z" fill="#2a5218"/>
+  <path d="M455,330 Q480,310 490,330 Q480,348 455,345Z" fill="#2a5218"/>
+  <!-- Head -->
+  <circle cx="400" cy="270" r="52" fill="#2a5218"/>
+  <circle cx="400" cy="268" r="46" fill="#3a6a22"/>
+  <!-- Ear nubs -->
+  <path d="M362,230 L355,208 L375,228Z" fill="#2a5218"/>
+  <path d="M438,230 L445,208 L425,228Z" fill="#2a5218"/>
+  <!-- Face -->
+  <!-- Left eye — CLOSED (still asleep-ish) -->
+  <path d="M374,268 Q382,272 390,268" stroke="#1e3a10" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- RIGHT EYE — OPEN, blazing green!! -->
+  <ellipse cx="418" cy="268" rx="18" ry="20" fill="#0a1a06"/>
+  <ellipse cx="418" cy="268" rx="14" ry="16" fill="#22c55e"/>
+  <ellipse cx="418" cy="268" rx="9" ry="11" fill="#4ade80"/>
+  <ellipse cx="418" cy="268" rx="5" ry="6" fill="#1a0c04"/>
+  <ellipse cx="415" cy="265" rx="2.5" ry="2.5" fill="#ffffff" opacity="0.9"/>
+  <!-- Eye glow -->
+  <ellipse cx="418" cy="268" rx="22" ry="24" fill="url(#eye-glow)" filter="url(#glow)"/>
+  <!-- Tiny nose -->
+  <ellipse cx="398" cy="284" rx="5" ry="3" fill="#1e4010" opacity="0.7"/>
+  <!-- Tiny mouth (slight smirk) -->
+  <path d="M388,295 Q398,302 410,295" stroke="#1e4010" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Backpack (tiny, colorful) -->
+  <rect x="366" y="305" width="24" height="20" rx="4" fill="#c0501a" stroke="#8a3510" stroke-width="1.5"/>
+  <!-- Buckle -->
+  <rect x="374" y="308" width="8" height="5" rx="1" fill="#ffd700"/>
+  <!-- Green glow from the eye illuminating surroundings -->
+  <ellipse cx="440" cy="260" rx="80" ry="60" fill="#22c55e" opacity="0.06" filter="url(#bigglow)"/>
+  <!-- Star sparkles around creature (magical aura) -->
+  <circle cx="330" cy="240" r="2.5" fill="#4ade80" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="470" cy="235" r="2" fill="#4ade80" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="355" cy="310" r="2" fill="#a0f060" opacity="0.5"/>
+  <circle cx="450" cy="305" r="2.5" fill="#60d040" opacity="0.6"/>
+  <!-- "!" speech indicator -->
+  <text x="490" y="230" fill="#4ade80" font-size="40" font-family="Impact, sans-serif" font-weight="bold" opacity="0.9" filter="url(#glow)">!</text>
 </svg>

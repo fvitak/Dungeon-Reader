@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="60%" r="65%">
+      <stop offset="0%" stop-color="#0e0618"/>
+      <stop offset="100%" stop-color="#02010a"/>
+    </radialGradient>
+    <radialGradient id="door-light" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#22c55e" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigglow"><feGaussianBlur stdDeviation="20" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="crack-glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Deep underground — massive ancient roots forming the walls -->
+  <!-- ROOT LEFT (massive) -->
+  <path d="M0,0 L0,500 L180,500 Q120,380 140,260 Q160,140 100,60 L0,0Z" fill="#0c0804"/>
+  <path d="M0,0 Q60,60 80,160 Q100,260 80,380 Q70,440 100,500 L60,500 Q30,440 40,380 Q60,260 40,160 Q20,60 0,0Z" fill="#140a04" opacity="0.7"/>
+  <!-- Root texture marks left -->
+  <path d="M20,100 Q60,120 50,180 Q40,240 70,300" stroke="#1a0e06" stroke-width="8" fill="none" opacity="0.6"/>
+  <path d="M60,0 Q90,80 80,160 Q70,220 100,280" stroke="#180c04" stroke-width="12" fill="none" opacity="0.7"/>
+  <!-- ROOT RIGHT (massive) -->
+  <path d="M800,0 L800,500 L620,500 Q680,380 660,260 Q640,140 700,60 L800,0Z" fill="#0c0804"/>
+  <path d="M800,0 Q740,60 720,160 Q700,260 720,380 Q730,440 700,500 L740,500 Q770,440 760,380 Q740,260 760,160 Q780,60 800,0Z" fill="#140a04" opacity="0.7"/>
+  <!-- Root texture marks right -->
+  <path d="M780,100 Q740,120 750,180 Q760,240 730,300" stroke="#1a0e06" stroke-width="8" fill="none" opacity="0.6"/>
+  <path d="M740,0 Q710,80 720,160 Q730,220 700,280" stroke="#180c04" stroke-width="12" fill="none" opacity="0.7"/>
+  <!-- Ground roots spreading at bottom -->
+  <path d="M0,500 Q100,460 200,470 Q300,460 400,465 Q500,460 600,470 Q700,460 800,500" stroke="#140a04" stroke-width="20" fill="none"/>
+  <path d="M0,500 Q120,472 250,480 Q380,470 400,475" stroke="#1a0e06" stroke-width="12" fill="none" opacity="0.7"/>
+  <!-- Ancient root ceiling (knotted, gnarled) -->
+  <path d="M0,0 L800,0 L800,100 Q600,60 400,80 Q200,60 0,100Z" fill="#0c0804"/>
+  <path d="M50,0 Q80,50 60,100" stroke="#140a04" stroke-width="25" fill="none"/>
+  <path d="M200,0 Q220,40 200,90" stroke="#140a04" stroke-width="18" fill="none"/>
+  <path d="M600,0 Q580,40 600,90" stroke="#140a04" stroke-width="18" fill="none"/>
+  <path d="M750,0 Q720,50 740,100" stroke="#140a04" stroke-width="25" fill="none"/>
+  <!-- Floor carved symbol (ancient marks) -->
+  <circle cx="400" cy="490" rx="80" ry="10" fill="none" stroke="#3a1a08" stroke-width="2" opacity="0.4"/>
+  <!-- THE DOOR — deep at the root, cracked open -->
+  <!-- Door frame carved into roots -->
+  <path d="M300,500 L300,220 Q300,140 400,128 Q500,140 500,220 L500,500Z" fill="#08060c"/>
+  <!-- Door itself (CRACKED OPEN — slight angle, light pouring through) -->
+  <!-- Left panel (mostly closed) -->
+  <path d="M302,500 L302,225 Q302,148 400,136 L400,500Z" fill="#100c06"/>
+  <!-- Door panel wood grain -->
+  <path d="M320,150 L316,498" stroke="#140a04" stroke-width="1.5" opacity="0.5"/>
+  <path d="M348,140 L344,498" stroke="#140a04" stroke-width="1" opacity="0.4"/>
+  <path d="M380,136 L378,498" stroke="#140a04" stroke-width="1.5" opacity="0.5"/>
+  <!-- Right panel (slightly ajar, revealing the light) -->
+  <path d="M400,500 L408,136 Q450,148 498,225 L498,500Z" fill="#100c06"/>
+  <path d="M420,144 L426,498" stroke="#140a04" stroke-width="1" opacity="0.4"/>
+  <path d="M455,155 L460,498" stroke="#140a04" stroke-width="1.5" opacity="0.5"/>
+  <!-- The CRACK — the gap between panels, blazing green light -->
+  <path d="M400,136 L400,500" stroke="#4ade80" stroke-width="12" filter="url(#bigglow)" opacity="0.9"/>
+  <path d="M400,136 L401,500" stroke="#ffffff" stroke-width="3" opacity="0.8" filter="url(#glow)"/>
+  <path d="M400,136 L400,500" stroke="#4ade80" stroke-width="6" filter="url(#crack-glow)" opacity="0.95"/>
+  <!-- Green light flooding outward from the crack -->
+  <ellipse cx="400" cy="320" rx="200" ry="240" fill="url(#door-light)"/>
+  <ellipse cx="400" cy="300" rx="80" ry="120" fill="#4ade80" opacity="0.08" filter="url(#bigglow)"/>
+  <!-- Arch glow at top -->
+  <path d="M300,220 Q300,140 400,128 Q500,140 500,220" stroke="#4ade80" stroke-width="3" fill="none" opacity="0.7" filter="url(#glow)"/>
+  <path d="M301,218 Q301,142 400,130 Q499,142 499,218" stroke="#a0f0c0" stroke-width="1" fill="none" opacity="0.6"/>
+  <!-- Ancient symbols above door -->
+  <circle cx="340" cy="118" r="7" fill="#4ade80" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="400" cy="110" r="9" fill="#4ade80" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="460" cy="118" r="7" fill="#4ade80" opacity="0.7" filter="url(#glow)"/>
+  <!-- Light particles escaping from crack -->
+  <circle cx="410" cy="180" r="3" fill="#a0f060" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="395" cy="240" r="2.5" fill="#80e040" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="405" cy="310" r="2" fill="#60c030" opacity="0.6"/>
+  <circle cx="392" cy="380" r="3" fill="#a0f060" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="408" cy="440" r="2" fill="#80e040" opacity="0.6"/>
+  <!-- Floating dust/spores in the green light -->
+  <circle cx="360" cy="200" r="1.5" fill="#4ade80" opacity="0.5"/>
+  <circle cx="440" cy="220" r="1.5" fill="#4ade80" opacity="0.4"/>
+  <circle cx="350" cy="300" r="2" fill="#60d040" opacity="0.4"/>
+  <circle cx="450" cy="320" r="1.5" fill="#60d040" opacity="0.4"/>
+  <circle cx="370" cy="400" r="2" fill="#4ade80" opacity="0.35"/>
+  <circle cx="430" cy="410" r="1.5" fill="#4ade80" opacity="0.35"/>
+  <!-- Floor green glow -->
+  <ellipse cx="400" cy="500" rx="160" ry="18" fill="#4ade80" opacity="0.1"/>
+  <!-- EPIC FRAME: dark vignette -->
+  <rect x="0" y="0" width="80" height="500" fill="#02010a" opacity="0.6"/>
+  <rect x="720" y="0" width="80" height="500" fill="#02010a" opacity="0.6"/>
+</svg>

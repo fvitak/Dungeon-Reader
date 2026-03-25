@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#0a0620"/>
+      <stop offset="100%" stop-color="#020108"/>
+    </radialGradient>
+    <radialGradient id="lamp" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c05020" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#c05020" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="shadow-blur"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Stone wall backdrop -->
+  <rect x="120" y="0" width="560" height="500" fill="#100808"/>
+  <!-- Stone block lines -->
+  <line x1="120" y1="80" x2="680" y2="80" stroke="#1a1008" stroke-width="3" opacity="0.7"/>
+  <line x1="120" y1="160" x2="680" y2="160" stroke="#1a1008" stroke-width="3" opacity="0.7"/>
+  <line x1="120" y1="240" x2="680" y2="240" stroke="#1a1008" stroke-width="3" opacity="0.7"/>
+  <line x1="120" y1="320" x2="680" y2="320" stroke="#1a1008" stroke-width="3" opacity="0.7"/>
+  <line x1="120" y1="400" x2="680" y2="400" stroke="#1a1008" stroke-width="3" opacity="0.7"/>
+  <line x1="200" y1="0" x2="200" y2="500" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="320" y1="40" x2="320" y2="500" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="440" y1="0" x2="440" y2="500" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="560" y1="40" x2="560" y2="500" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="620" y1="0" x2="620" y2="500" stroke="#1a1008" stroke-width="2" opacity="0.4"/>
+  <!-- Side walls dark -->
+  <rect x="0" y="0" width="120" height="500" fill="#080408"/>
+  <rect x="680" y="0" width="120" height="500" fill="#080408"/>
+  <!-- Floor -->
+  <rect x="0" y="450" width="800" height="50" fill="#060406"/>
+  <!-- Tiny sconce lamp (the ONLY light source, left wall) -->
+  <ellipse cx="140" cy="200" rx="50" ry="60" fill="url(#lamp)"/>
+  <circle cx="140" cy="200" r="12" fill="#c05020" opacity="0.5" filter="url(#glow)"/>
+  <rect x="133" y="195" width="14" height="20" rx="4" fill="#1a0e06"/>
+  <ellipse cx="140" cy="193" rx="9" ry="12" fill="#ff8030" opacity="0.6" filter="url(#glow)"/>
+  <ellipse cx="140" cy="189" rx="6" ry="8" fill="#ffcc00" opacity="0.5"/>
+  <!-- The cast light — a wedge of dim orange on the right wall -->
+  <path d="M152,180 Q400,0 680,100 L680,500 Q400,500 152,320Z" fill="#c05020" opacity="0.03"/>
+  <!-- THE SHADOW — a figure on the wall (humanoid-ish, but WRONG — angular, too tall, wrong proportions) -->
+  <!-- Shadow head -->
+  <ellipse cx="490" cy="140" rx="42" ry="50" fill="#04020a" opacity="0.85" filter="url(#shadow-blur)"/>
+  <!-- Shadow neck -->
+  <rect x="480" y="185" width="20" height="25" fill="#04020a" opacity="0.85"/>
+  <!-- Shadow body (too elongated, unsettling) -->
+  <path d="M450,210 Q420,260 430,340 Q435,380 450,410 L530,410 Q545,380 550,340 Q560,260 530,210Z" fill="#04020a" opacity="0.85" filter="url(#shadow-blur)"/>
+  <!-- Shadow arms (reaching, one longer than the other — WRONG) -->
+  <!-- Long arm reaching left -->
+  <path d="M452,250 Q400,230 340,260 Q300,275 280,300 Q295,290 310,285 Q350,270 400,258 Q432,245 455,258Z" fill="#04020a" opacity="0.85"/>
+  <!-- Short arm right (normal) -->
+  <path d="M528,255 Q560,245 580,265 Q572,258 555,262 Q540,268 530,262Z" fill="#04020a" opacity="0.8"/>
+  <!-- Shadow legs (going down into the floor — merging) -->
+  <path d="M450,405 Q440,450 445,500 L475,500 L472,420Z" fill="#04020a" opacity="0.85"/>
+  <path d="M530,405 Q540,450 535,500 L505,500 L508,420Z" fill="#04020a" opacity="0.85"/>
+  <!-- Shadow glow — faint purple around the shadow itself -->
+  <ellipse cx="490" cy="290" rx="100" ry="160" fill="#3010a0" opacity="0.06" filter="url(#glow)"/>
+  <!-- "NO ONE IS THERE" indicator — empty space where a person should be -->
+  <!-- Just a question mark glow on the floor -->
+  <text x="230" y="430" fill="#6020a0" font-size="28" font-family="sans-serif" opacity="0.5" filter="url(#glow)">?</text>
+  <!-- Warning runes on wall (faint purple) -->
+  <circle cx="300" cy="200" r="4" fill="#6020a0" opacity="0.4"/>
+  <circle cx="350" cy="300" r="3" fill="#6020a0" opacity="0.3"/>
+  <circle cx="280" cy="350" r="3.5" fill="#6020a0" opacity="0.35"/>
+</svg>

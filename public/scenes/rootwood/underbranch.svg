@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0e0820"/>
+      <stop offset="100%" stop-color="#04020a"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="dimglow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Root corridor walls (very dark) -->
+  <path d="M0,0 L0,500 L100,500 L130,0Z" fill="#0c0608"/>
+  <path d="M800,0 L800,500 L700,500 L670,0Z" fill="#0c0608"/>
+  <!-- Ceiling - dense roots -->
+  <path d="M0,0 L800,0 L800,80 Q600,50 400,60 Q200,50 0,80Z" fill="#0c0608"/>
+  <path d="M50,0 Q70,50 60,100" stroke="#1a0e08" stroke-width="20" fill="none" opacity="0.8"/>
+  <path d="M180,0 Q160,40 175,90" stroke="#180c06" stroke-width="14" fill="none" opacity="0.7"/>
+  <path d="M350,0 Q360,35 345,80" stroke="#1a0e08" stroke-width="18" fill="none" opacity="0.7"/>
+  <path d="M500,0 Q490,35 505,80" stroke="#180c06" stroke-width="14" fill="none" opacity="0.6"/>
+  <path d="M660,0 Q680,45 665,95" stroke="#1a0e08" stroke-width="18" fill="none" opacity="0.7"/>
+  <path d="M750,0 Q730,50 740,100" stroke="#180c06" stroke-width="12" fill="none" opacity="0.6"/>
+  <!-- Floor roots -->
+  <path d="M0,480 Q200,460 400,470 Q600,460 800,480" stroke="#180c06" stroke-width="12" fill="none" opacity="0.9"/>
+  <path d="M0,495 Q200,478 400,485 Q600,478 800,495" stroke="#0e0804" stroke-width="8" fill="none"/>
+  <!-- The corridor going into darkness -->
+  <!-- Perspective lines -->
+  <path d="M130,0 L200,500" stroke="#140a04" stroke-width="3" opacity="0.5"/>
+  <path d="M670,0 L600,500" stroke="#140a04" stroke-width="3" opacity="0.5"/>
+  <!-- ROOT VEINS — mostly dark, a few flickering amber -->
+  <!-- Dead/dark roots -->
+  <path d="M130,150 Q250,140 370,155 Q450,165 550,150" stroke="#180c04" stroke-width="6" fill="none" opacity="0.7"/>
+  <path d="M130,250 Q220,238 340,252 Q460,265 580,248 Q640,242 670,252" stroke="#180c04" stroke-width="5" fill="none" opacity="0.6"/>
+  <path d="M130,360 Q240,348 380,362 Q500,374 610,358 Q650,352 670,358" stroke="#180c04" stroke-width="5" fill="none" opacity="0.6"/>
+  <!-- ONE glowing root (flickering amber) -->
+  <path d="M130,310 Q260,298 380,312 Q470,322 560,308" stroke="#4a2808" stroke-width="5" fill="none"/>
+  <path d="M130,310 Q260,298 380,312 Q470,322 560,308" stroke="#c06020" stroke-width="2" fill="none" opacity="0.6" filter="url(#glow)"/>
+  <!-- Another dim root -->
+  <path d="M200,195 Q310,185 430,198 Q510,206 590,194" stroke="#3a1a04" stroke-width="4" fill="none" opacity="0.5"/>
+  <path d="M200,195 Q310,185 430,198 Q510,206 590,194" stroke="#804010" stroke-width="1.5" fill="none" opacity="0.35"/>
+  <!-- Far end of corridor — total darkness -->
+  <ellipse cx="400" cy="300" rx="100" ry="130" fill="#04020a" opacity="0.7"/>
+  <ellipse cx="400" cy="320" rx="60" ry="80" fill="#02010a" opacity="0.8"/>
+  <!-- Small amber sconce (barely lit) left -->
+  <circle cx="148" cy="200" r="10" fill="#c06020" opacity="0.4" filter="url(#dimglow)"/>
+  <circle cx="148" cy="200" r="5" fill="#ffaa40" opacity="0.5"/>
+  <!-- Warning cracks in walls (purple, faint) -->
+  <path d="M140,100 Q155,130 148,170 Q140,200 152,230" stroke="#6020a0" stroke-width="1.5" fill="none" opacity="0.35"/>
+  <path d="M660,120 Q648,150 655,185 Q662,215 648,250" stroke="#6020a0" stroke-width="1.5" fill="none" opacity="0.3"/>
+</svg>

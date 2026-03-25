@@ -1,4 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Door Glow</text>
+  <defs>
+    <radialGradient id="aura" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#9d4edd" stop-opacity="0.7"/>
+      <stop offset="40%" stop-color="#6020c0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2d0060" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigglow"><feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="#06030e"/>
+  <!-- Walls -->
+  <path d="M0,0 L120,0 L140,500 L0,500Z" fill="#1a0c04"/>
+  <path d="M800,0 L680,0 L660,500 L800,500Z" fill="#1a0c04"/>
+  <path d="M0,0 L800,0 L800,55 Q400,35 0,55Z" fill="#120804"/>
+  <!-- Big purple glow behind door -->
+  <ellipse cx="400" cy="300" rx="240" ry="260" fill="url(#aura)"/>
+  <ellipse cx="400" cy="300" rx="130" ry="150" fill="#9d4edd" opacity="0.12" filter="url(#bigglow)"/>
+  <!-- Door frame -->
+  <path d="M270,500 L270,200 Q270,140 400,130 Q530,140 530,200 L530,500Z" fill="#0a0602"/>
+  <!-- Door slab -->
+  <rect x="288" y="155" width="224" height="345" fill="#1a0e06"/>
+  <!-- Wood grain -->
+  <path d="M310,170 Q305,310 312,450" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M360,162 Q358,310 364,452" stroke="#1e1208" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M400,160 L400,453" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M440,162 Q442,310 436,452" stroke="#1e1208" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M490,170 Q495,310 488,450" stroke="#1e1208" stroke-width="2" fill="none" opacity="0.5"/>
+  <!-- BRIGHT GLOWING CRACKS — door is pulsing -->
+  <path d="M350,158 Q368,175 385,164 Q400,155 418,168 Q435,178 450,158" stroke="#c060ff" stroke-width="3" fill="none" filter="url(#glow)"/>
+  <path d="M350,158 Q368,175 385,164 Q400,155 418,168 Q435,178 450,158" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.9"/>
+  <!-- Left crack bright -->
+  <path d="M290,230 Q308,248 300,275 Q292,305 306,328" stroke="#b050ff" stroke-width="2.5" fill="none" filter="url(#glow)"/>
+  <path d="M290,230 Q308,248 300,275 Q292,305 306,328" stroke="#e0a0ff" stroke-width="1" fill="none" opacity="0.8"/>
+  <!-- Right crack bright -->
+  <path d="M510,248 Q495,268 504,292 Q512,318 498,342" stroke="#b050ff" stroke-width="2.5" fill="none" filter="url(#glow)"/>
+  <!-- Center crack -->
+  <path d="M355,295 Q375,315 362,342 Q372,365 355,388" stroke="#9030d0" stroke-width="2" fill="none" filter="url(#glow)"/>
+  <!-- Knob rune -->
+  <circle cx="480" cy="330" r="14" fill="#0e0604" stroke="#b050ff" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="480" cy="330" r="7" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <!-- Arch -->
+  <path d="M270,200 Q270,140 400,130 Q530,140 530,200" stroke="#6030a0" stroke-width="8" fill="none"/>
+  <path d="M272,199 Q272,142 400,132 Q528,142 528,199" stroke="#c080ff" stroke-width="2" fill="none" opacity="0.8"/>
+  <!-- Particle explosion around door -->
+  <circle cx="298" cy="180" r="3" fill="#c060ff" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="502" cy="175" r="3" fill="#c060ff" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="360" cy="148" r="2.5" fill="#e090ff" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="440" cy="148" r="2.5" fill="#e090ff" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="270" cy="280" r="2" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="530" cy="295" r="2" fill="#9d4edd" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="320" cy="430" r="2" fill="#7030a0" opacity="0.5"/>
+  <circle cx="478" cy="440" r="2" fill="#7030a0" opacity="0.5"/>
+  <circle cx="400" cy="130" r="3" fill="#c060ff" opacity="0.9" filter="url(#glow)"/>
+  <!-- Floor glow -->
+  <ellipse cx="400" cy="500" rx="200" ry="30" fill="#6020a0" opacity="0.15"/>
 </svg>

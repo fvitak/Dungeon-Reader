@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#2a1a0c"/>
+      <stop offset="100%" stop-color="#0c0604"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Room corner walls -->
+  <path d="M0,0 L0,500 L200,500 L200,80Z" fill="#180e06" opacity="0.5"/>
+  <path d="M800,0 L800,500 L600,500 L600,80Z" fill="#180e06" opacity="0.5"/>
+  <!-- Floating orbs all around -->
+  <circle cx="150" cy="100" r="20" fill="#ffd700" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="150" cy="100" r="11" fill="#ffffa0"/>
+  <circle cx="650" cy="90" r="16" fill="#ffd700" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="650" cy="90" r="9" fill="#ffffc0"/>
+  <circle cx="100" cy="280" r="14" fill="#ffaa30" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="100" cy="280" r="7" fill="#ffe090"/>
+  <circle cx="700" cy="260" r="18" fill="#ffd700" opacity="0.75" filter="url(#glow)"/>
+  <circle cx="700" cy="260" r="10" fill="#ffffa0"/>
+  <circle cx="250" cy="60" r="12" fill="#ffcc00" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="560" cy="50" r="10" fill="#ffd700" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="380" cy="40" r="14" fill="#ffaa30" opacity="0.65" filter="url(#glow)"/>
+  <circle cx="200" cy="430" r="10" fill="#ffd700" opacity="0.5"/>
+  <circle cx="620" cy="420" r="12" fill="#ffcc00" opacity="0.5"/>
+  <!-- Pip standing, glowing green, looking up at us -->
+  <!-- Glow from Pip -->
+  <ellipse cx="400" cy="310" rx="100" ry="90" fill="#22c55e" opacity="0.12" filter="url(#glow)"/>
+  <!-- Body -->
+  <ellipse cx="400" cy="340" rx="50" ry="55" fill="#2a5218"/>
+  <ellipse cx="400" cy="336" rx="43" ry="48" fill="#3a6a22"/>
+  <!-- Legs -->
+  <rect x="378" y="385" width="16" height="35" rx="5" fill="#2a5218"/>
+  <rect x="406" y="385" width="16" height="35" rx="5" fill="#2a5218"/>
+  <!-- Feet -->
+  <ellipse cx="386" cy="420" rx="12" ry="7" fill="#1e4010"/>
+  <ellipse cx="414" cy="420" rx="12" ry="7" fill="#1e4010"/>
+  <!-- Arms (outstretched, excited!) -->
+  <path d="M358,320 Q320,295 295,285 Q285,290 295,300 Q310,308 340,320Z" fill="#3a6a22"/>
+  <path d="M442,320 Q480,295 505,285 Q515,290 505,300 Q490,308 460,320Z" fill="#3a6a22"/>
+  <!-- Head -->
+  <circle cx="400" cy="270" r="50" fill="#2a5218"/>
+  <circle cx="400" cy="268" r="44" fill="#3a6a22"/>
+  <!-- Ear nubs -->
+  <path d="M364,235 L357,213 L377,233Z" fill="#2a5218"/>
+  <path d="M436,235 L443,213 L423,233Z" fill="#2a5218"/>
+  <!-- Eyes BOTH OPEN wide + bright -->
+  <ellipse cx="382" cy="265" rx="14" ry="16" fill="#0a1a06"/>
+  <ellipse cx="382" cy="265" rx="11" ry="13" fill="#22c55e"/>
+  <ellipse cx="382" cy="265" rx="7" ry="8" fill="#4ade80"/>
+  <ellipse cx="382" cy="265" rx="3.5" ry="4" fill="#1a0c04"/>
+  <ellipse cx="379" cy="262" rx="2" ry="2" fill="#fff" opacity="0.9"/>
+  <ellipse cx="382" cy="265" rx="18" ry="20" fill="#22c55e" opacity="0.2" filter="url(#glow)"/>
+  <ellipse cx="418" cy="265" rx="14" ry="16" fill="#0a1a06"/>
+  <ellipse cx="418" cy="265" rx="11" ry="13" fill="#22c55e"/>
+  <ellipse cx="418" cy="265" rx="7" ry="8" fill="#4ade80"/>
+  <ellipse cx="418" cy="265" rx="3.5" ry="4" fill="#1a0c04"/>
+  <ellipse cx="415" cy="262" rx="2" ry="2" fill="#fff" opacity="0.9"/>
+  <ellipse cx="418" cy="265" rx="18" ry="20" fill="#22c55e" opacity="0.2" filter="url(#glow)"/>
+  <!-- Smile -->
+  <path d="M385,288 Q400,298 415,288" stroke="#1e4010" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Backpack -->
+  <rect x="358" y="308" width="20" height="25" rx="4" fill="#c0501a" stroke="#8a3510" stroke-width="1.5"/>
+  <rect x="364" y="311" width="8" height="5" rx="1" fill="#ffd700"/>
+  <!-- Sparkle aura around Pip -->
+  <circle cx="330" cy="248" r="3" fill="#4ade80" filter="url(#glow)" opacity="0.8"/>
+  <circle cx="472" cy="242" r="2.5" fill="#4ade80" filter="url(#glow)" opacity="0.7"/>
+  <circle cx="345" cy="370" r="2" fill="#80f040" opacity="0.6"/>
+  <circle cx="456" cy="365" r="2.5" fill="#60d040" opacity="0.6"/>
+  <circle cx="370" cy="430" r="2" fill="#4ade80" opacity="0.5"/>
+  <circle cx="430" cy="427" r="2" fill="#4ade80" opacity="0.5"/>
+  <!-- "PIP" label -->
+  <text x="400" y="240" text-anchor="middle" fill="#4ade80" font-size="12" font-family="sans-serif" font-weight="bold" opacity="0.5">PIP</text>
+</svg>

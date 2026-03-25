@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#120a06"/>
+      <stop offset="100%" stop-color="#04020a"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="eye-glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Stone cellar walls -->
+  <path d="M0,0 L0,500 L60,500 L80,0Z" fill="#0e0808"/>
+  <path d="M800,0 L800,500 L740,500 L720,0Z" fill="#0e0808"/>
+  <path d="M0,0 L800,0 L800,70 Q400,45 0,70Z" fill="#0e0808"/>
+  <!-- Stone block pattern ceiling -->
+  <line x1="0" y1="30" x2="800" y2="30" stroke="#1a1008" stroke-width="2" opacity="0.6"/>
+  <line x1="100" y1="0" x2="100" y2="70" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="250" y1="0" x2="250" y2="70" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="400" y1="0" x2="400" y2="70" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="550" y1="0" x2="550" y2="70" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <line x1="700" y1="0" x2="700" y2="70" stroke="#1a1008" stroke-width="2" opacity="0.5"/>
+  <!-- Dim torches -->
+  <rect x="75" y="120" width="12" height="30" rx="3" fill="#1a0e04"/>
+  <ellipse cx="81" cy="118" rx="8" ry="12" fill="#c05020" opacity="0.6" filter="url(#glow)"/>
+  <ellipse cx="81" cy="115" rx="5" ry="8" fill="#ff8020" opacity="0.5"/>
+  <rect x="715" y="120" width="12" height="30" rx="3" fill="#1a0e04"/>
+  <ellipse cx="721" cy="118" rx="8" ry="12" fill="#c05020" opacity="0.5" filter="url(#glow)"/>
+  <ellipse cx="721" cy="115" rx="5" ry="8" fill="#ff8020" opacity="0.4"/>
+  <!-- Floor straw/hay -->
+  <path d="M80,480 Q200,465 400,472 Q600,465 720,480 L720,500 L80,500Z" fill="#1a1206"/>
+  <!-- CREATURES huddled in corners — pairs of glowing eyes -->
+  <!-- Back left corner cluster (4-5 creatures) -->
+  <!-- Creature 1 (big, huddled) -->
+  <ellipse cx="160" cy="350" rx="45" ry="38" fill="#120a04" opacity="0.9"/>
+  <ellipse cx="150" cy="345" rx="38" ry="32" fill="#1a0e06" opacity="0.8"/>
+  <!-- Eyes -->
+  <ellipse cx="145" cy="338" rx="7" ry="8" fill="#ff8820" opacity="0.9" filter="url(#eye-glow)"/>
+  <ellipse cx="162" cy="336" rx="7" ry="8" fill="#ff8820" opacity="0.9" filter="url(#eye-glow)"/>
+  <ellipse cx="145" cy="338" rx="3.5" ry="4" fill="#1a0400"/>
+  <ellipse cx="162" cy="336" rx="3.5" ry="4" fill="#1a0400"/>
+  <!-- Creature 2 (smaller, behind) -->
+  <ellipse cx="115" cy="400" rx="32" ry="28" fill="#0e0804"/>
+  <ellipse cx="112" cy="396" rx="26" ry="22" fill="#160c04"/>
+  <ellipse cx="106" cy="390" rx="6" ry="7" fill="#ffaa30" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="120" cy="388" rx="6" ry="7" fill="#ffaa30" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="106" cy="390" rx="3" ry="3.5" fill="#1a0400"/>
+  <ellipse cx="120" cy="388" rx="3" ry="3.5" fill="#1a0400"/>
+  <!-- Creature 3 (tiny, peeking) -->
+  <ellipse cx="185" cy="415" rx="22" ry="18" fill="#0e0804"/>
+  <ellipse cx="182" cy="410" rx="15" ry="12" fill="#160c04"/>
+  <ellipse cx="178" cy="406" rx="5" ry="6" fill="#ffcc00" opacity="0.7" filter="url(#eye-glow)"/>
+  <ellipse cx="190" cy="404" rx="5" ry="6" fill="#ffcc00" opacity="0.7" filter="url(#eye-glow)"/>
+  <!-- Back right corner cluster -->
+  <!-- Creature 4 (large) -->
+  <ellipse cx="640" cy="360" rx="48" ry="40" fill="#120a04" opacity="0.9"/>
+  <ellipse cx="645" cy="354" rx="40" ry="34" fill="#1a0e06" opacity="0.8"/>
+  <ellipse cx="636" cy="346" rx="8" ry="9" fill="#c070ff" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="655" cy="344" rx="8" ry="9" fill="#c070ff" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="636" cy="346" rx="4" ry="4.5" fill="#1a0020"/>
+  <ellipse cx="655" cy="344" rx="4" ry="4.5" fill="#1a0020"/>
+  <!-- Creature 5 (medium) -->
+  <ellipse cx="695" cy="395" rx="36" ry="30" fill="#0e0804"/>
+  <ellipse cx="692" cy="390" rx="30" ry="24" fill="#160c04"/>
+  <ellipse cx="684" cy="385" rx="7" ry="8" fill="#ff6040" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="700" cy="383" rx="7" ry="8" fill="#ff6040" opacity="0.8" filter="url(#eye-glow)"/>
+  <ellipse cx="684" cy="385" rx="3.5" ry="4" fill="#1a0400"/>
+  <ellipse cx="700" cy="383" rx="3.5" ry="4" fill="#1a0400"/>
+  <!-- Creature 6 (tiny, way back) -->
+  <ellipse cx="225" cy="380" rx="25" ry="20" fill="#0a0602" opacity="0.7"/>
+  <ellipse cx="222" cy="375" rx="5" ry="6" fill="#40d080" opacity="0.6" filter="url(#eye-glow)"/>
+  <ellipse cx="234" cy="373" rx="5" ry="6" fill="#40d080" opacity="0.6" filter="url(#eye-glow)"/>
+  <!-- Creature 7 -->
+  <ellipse cx="590" cy="400" rx="28" ry="22" fill="#0e0804" opacity="0.8"/>
+  <ellipse cx="588" cy="396" rx="6" ry="7" fill="#60a0ff" opacity="0.7"/>
+  <ellipse cx="600" cy="394" rx="6" ry="7" fill="#60a0ff" opacity="0.7"/>
+  <!-- Center area — empty, all creatures at edges -->
+  <!-- Slight amber floor shimmer from torches -->
+  <ellipse cx="200" cy="480" rx="120" ry="20" fill="#c05020" opacity="0.06"/>
+  <ellipse cx="650" cy="480" rx="100" ry="18" fill="#c05020" opacity="0.05"/>
+  <!-- Shadow in center (ominous) -->
+  <ellipse cx="400" cy="400" rx="80" ry="40" fill="#04020a" opacity="0.5"/>
+</svg>

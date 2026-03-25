@@ -1,4 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#2d1b4e"/>
-  <text x="400" y="250" text-anchor="middle" fill="#a78bfa" font-size="24" font-family="sans-serif">Brave Hall</text>
+  <defs>
+    <radialGradient id="bg" cx="60%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#1a0e30"/>
+      <stop offset="100%" stop-color="#06030e"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="knock-glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <!-- Door (right side, glowing bright) -->
+  <rect x="430" y="0" width="240" height="500" fill="#0e0804"/>
+  <path x="430" y="0" d="M430,0 L430,500" stroke="#3a1808" stroke-width="4"/>
+  <path d="M470,0 L470,500" stroke="#1a1006" stroke-width="1.5" opacity="0.4"/>
+  <path d="M510,0 L510,500" stroke="#1a1006" stroke-width="1" opacity="0.3"/>
+  <path d="M560,0 L560,500" stroke="#1a1006" stroke-width="1.5" opacity="0.4"/>
+  <path d="M610,0 L610,500" stroke="#1a1006" stroke-width="1" opacity="0.3"/>
+  <!-- Door glow aura (bright purple) -->
+  <rect x="430" y="0" width="240" height="500" fill="#6020a0" opacity="0.12"/>
+  <!-- Door seam glow -->
+  <path d="M430,0 L430,500" stroke="#9d4edd" stroke-width="3" opacity="0.8" filter="url(#glow)"/>
+  <!-- Sound wave rings from impact -->
+  <ellipse cx="430" cy="250" rx="40" ry="50" fill="none" stroke="#c060ff" stroke-width="3" opacity="0.9" filter="url(#glow)"/>
+  <ellipse cx="430" cy="250" rx="80" ry="90" fill="none" stroke="#9d4edd" stroke-width="2.5" opacity="0.7"/>
+  <ellipse cx="430" cy="250" rx="120" ry="135" fill="none" stroke="#7030b0" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="430" cy="250" rx="160" ry="175" fill="none" stroke="#5020a0" stroke-width="1.5" opacity="0.3"/>
+  <ellipse cx="430" cy="250" rx="200" ry="215" fill="none" stroke="#3a1080" stroke-width="1" opacity="0.2"/>
+  <!-- Impact flash point -->
+  <circle cx="430" cy="250" r="18" fill="#c060ff" opacity="0.6" filter="url(#knock-glow)"/>
+  <circle cx="430" cy="250" r="8" fill="#ffffff" opacity="0.8"/>
+  <!-- The fist (left side, punching toward door) -->
+  <!-- Arm -->
+  <path d="M60,240 Q160,230 280,245 Q340,250 380,248" stroke="#5a3520" stroke-width="55" fill="none" stroke-linecap="round"/>
+  <path d="M60,240 Q160,230 280,245 Q340,250 380,248" stroke="#7a4a30" stroke-width="45" fill="none" stroke-linecap="round"/>
+  <path d="M60,240 Q160,230 280,245 Q340,250 380,248" stroke="#8a5838" stroke-width="30" fill="none" stroke-linecap="round"/>
+  <!-- Fist knuckles -->
+  <rect x="355" y="210" width="75" height="75" rx="12" fill="#8a5838"/>
+  <rect x="358" y="213" width="69" height="69" rx="10" fill="#9a6848"/>
+  <!-- Knuckle lines -->
+  <path d="M375,213 L373,285" stroke="#7a4a30" stroke-width="2.5" opacity="0.7"/>
+  <path d="M395,213 L393,285" stroke="#7a4a30" stroke-width="2.5" opacity="0.7"/>
+  <path d="M415,213 L413,285" stroke="#7a4a30" stroke-width="2.5" opacity="0.7"/>
+  <!-- Knuckle highlights -->
+  <ellipse cx="373" cy="222" rx="7" ry="5" fill="#b08060" opacity="0.6"/>
+  <ellipse cx="393" cy="220" rx="7" ry="5" fill="#b08060" opacity="0.6"/>
+  <ellipse cx="413" cy="222" rx="7" ry="5" fill="#b08060" opacity="0.6"/>
+  <!-- Impact sparks -->
+  <path d="M432,248 L450,230 L445,228" stroke="#ffd700" stroke-width="2" fill="none" filter="url(#glow)"/>
+  <path d="M432,252 L455,270 L450,275" stroke="#ffd700" stroke-width="2" fill="none" filter="url(#glow)"/>
+  <path d="M431,245 L445,220 L455,215" stroke="#ffaa00" stroke-width="1.5" fill="none" filter="url(#glow)"/>
+  <circle cx="440" cy="232" r="3" fill="#ffd700" filter="url(#glow)"/>
+  <circle cx="445" cy="268" r="3" fill="#ffd700" filter="url(#glow)"/>
+  <circle cx="455" cy="217" r="2" fill="#ffaa00" filter="url(#glow)"/>
+  <!-- Bold "KNOCK!" text -->
+  <text x="250" y="130" text-anchor="middle" fill="#c060ff" font-size="48" font-family="Impact, sans-serif" font-weight="bold" opacity="0.9" filter="url(#glow)">KNOCK!</text>
+  <text x="250" y="130" text-anchor="middle" fill="#ffffff" font-size="48" font-family="Impact, sans-serif" font-weight="bold" opacity="0.3">KNOCK!</text>
 </svg>
