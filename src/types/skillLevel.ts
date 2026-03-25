@@ -62,8 +62,9 @@ export const READING_LEVEL_META: Record<ReadingSkillLevel, SkillLevelMeta> = {
   R10: { level: 'R10', label: 'Multi-syllabic + fluency',    gradeTypical: 'Grade 2, late',   standard: 'RF.2.4'   },
 }
 
-export type MathLevelText = Partial<Record<MathSkillLevel, string>>
+export type MathLevelText    = Partial<Record<MathSkillLevel, string>>
 export type ReadingLevelText = Partial<Record<ReadingSkillLevel, string>>
+export type SkillLevelText   = MathLevelText | ReadingLevelText
 
 // Exported so useGameEngine can import it
 export const MASTERY_THRESHOLD = 3

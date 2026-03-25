@@ -5,20 +5,20 @@ import type {
   RiddleEvent,
   StoryScene,
   RootwoodScene,
+  RootwoodChallengeEvent,
+  RootwoodChoiceEvent,
   GameEvent,
   GameState,
 } from '../types/game'
 import {
-  type MathSkillLevel,
-  type ReadingSkillLevel,
-  type SkillProfile,
-  type MathLevelText,
-  type ReadingLevelText,
-  selectForMathLevel,
-  selectForReadingLevel,
+  MASTERY_THRESHOLD,
   nextMathLevel,
   nextReadingLevel,
-  MASTERY_THRESHOLD,
+  selectForMathLevel,
+  selectForReadingLevel,
+  type MathLevelText,
+  type ReadingLevelText,
+  type SkillProfile,
 } from '../types/skillLevel'
 
 interface UseGameEngineOptions {
@@ -44,10 +44,7 @@ export function useGameEngine({
     currentSceneId: initialSceneId,
     completedSceneIds: [],
     gradeBand: initialGradeBand,
-    skillProfile: {
-      math: 'M1',
-      reading: 'R1',
-    },
+    skillProfile: { math: 'M1', reading: 'R1' },
     consecutiveCorrect: 0,
     stats: defaultStats,
     inventory: [],
@@ -71,9 +68,7 @@ export function useGameEngine({
     setGameState((prevState) => ({
       ...prevState,
       currentSceneId: nextSceneId,
-      completedSceneIds: prevState.completedSceneIds.includes(
-        prevState.currentSceneId,
-      )
+      completedSceneIds: prevState.completedSceneIds.includes(prevState.currentSceneId)
         ? prevState.completedSceneIds
         : [...prevState.completedSceneIds, prevState.currentSceneId],
     }))
@@ -90,17 +85,17 @@ export function useGameEngine({
     setGameState((prevState) => ({
       ...prevState,
       currentSceneId: nextSceneId,
-      completedSceneIds: prevState.completedSceneIds.includes(
-        prevState.currentSceneId,
-      )
+      completedSceneIds: prevState.completedSceneIds.includes(prevState.currentSceneId)
         ? prevState.completedSceneIds
         : [...prevState.completedSceneIds, prevState.currentSceneId],
       flags: flagKey
-        ? {
-            ...prevState.flags,
-            [flagKey]: true,
-          }
+        ? { ...prevState.flags, [flagKey]: true }
         : prevState.flags,
+      stats: {
+        ...prevState.stats,
+        xp: prevState.stats.xp + 5,
+        xpThisEpisode: prevState.stats.xpThisEpisode + 5,
+      },
     }))
   }
 
@@ -150,29 +145,24 @@ export function useGameEngine({
         nextState.stats.stars += 1
       }
 
-      // XP on success
-      if (result === 'success' && (event.type === 'combat' || event.type === 'riddle')) {
-        const xpGain = nextState.consecutiveCorrect === 0 ? 15 : 8
+      // XP on success (challenge or old combat/riddle)
+      if (result === 'success' && event.type !== 'reward') {
+        const isFirstAttempt = nextState.consecutiveCorrect === 0
+        const xpGain = isFirstAttempt ? 15 : 8
         nextState.stats.xp += xpGain
         nextState.stats.xpThisEpisode += xpGain
         nextState.consecutiveCorrect += 1
       }
 
-      // XP on choice (always awarded, any path)
-      if (event.type === 'choice') {
-        nextState.stats.xp += 5
-        nextState.stats.xpThisEpisode += 5
-      }
-
-      // Reset streak on wrong answer (no XP penalty, just reset)
+      // Reset streak on wrong answer
       if (result === 'fail') {
         nextState.consecutiveCorrect = 0
       }
 
-      // Mastery check — component watches __readyToAdvanceMath flag
+      // Auto-advance skill level after mastery threshold
       if (nextState.consecutiveCorrect >= MASTERY_THRESHOLD) {
-        nextState.flags['__readyToAdvanceMath'] = true
         nextState.consecutiveCorrect = 0
+        nextState.flags['__readyToAdvance'] = true
       }
 
       const nextSceneId =
@@ -181,9 +171,7 @@ export function useGameEngine({
           : getFailureSceneId(event) ?? prevState.currentSceneId
 
       if (nextSceneId !== prevState.currentSceneId) {
-        nextState.completedSceneIds = prevState.completedSceneIds.includes(
-          prevState.currentSceneId,
-        )
+        nextState.completedSceneIds = prevState.completedSceneIds.includes(prevState.currentSceneId)
           ? prevState.completedSceneIds
           : [...prevState.completedSceneIds, prevState.currentSceneId]
       }
@@ -194,6 +182,18 @@ export function useGameEngine({
     })
   }
 
+  function setSkillProfile(profile: SkillProfile) {
+    setGameState(prev => ({ ...prev, skillProfile: profile }))
+  }
+
+  function getMathPrompt(content: MathLevelText): string {
+    return selectForMathLevel(content, gameState.skillProfile.math)
+  }
+
+  function getReadingPrompt(content: ReadingLevelText): string {
+    return selectForReadingLevel(content, gameState.skillProfile.reading)
+  }
+
   function advanceMathLevel() {
     setGameState(prev => {
       const next = nextMathLevel(prev.skillProfile.math)
@@ -202,7 +202,7 @@ export function useGameEngine({
         ...prev,
         skillProfile: { ...prev.skillProfile, math: next },
         consecutiveCorrect: 0,
-        flags: { ...prev.flags, __readyToAdvanceMath: false },
+        flags: { ...prev.flags, __readyToAdvance: false },
       }
     })
   }
@@ -219,18 +219,6 @@ export function useGameEngine({
     })
   }
 
-  function setSkillProfile(profile: SkillProfile) {
-    setGameState(prev => ({ ...prev, skillProfile: profile }))
-  }
-
-  function getMathPrompt(content: MathLevelText): string {
-    return selectForMathLevel(content, gameState.skillProfile.math)
-  }
-
-  function getReadingPrompt(content: ReadingLevelText): string {
-    return selectForReadingLevel(content, gameState.skillProfile.reading)
-  }
-
   return {
     gameState,
     currentScene,
@@ -240,11 +228,11 @@ export function useGameEngine({
     chooseOption,
     rewardChallengeSuccess,
     resolveEvent,
-    advanceMathLevel,
-    advanceReadingLevel,
     setSkillProfile,
     getMathPrompt,
     getReadingPrompt,
+    advanceMathLevel,
+    advanceReadingLevel,
   }
 }
 

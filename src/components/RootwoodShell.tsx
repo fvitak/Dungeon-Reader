@@ -7,11 +7,10 @@ import {
 } from '../types/skillLevel'
 import type {
   RootwoodScene,
-  RootwoodCombatEvent,
-  RootwoodRiddleEvent,
+  RootwoodEvent,
+  RootwoodChallengeEvent,
   RootwoodChoiceEvent,
   RootwoodRewardEvent,
-  RootwoodEvent,
   GameEvent,
 } from '../types/game'
 
@@ -20,10 +19,10 @@ export function RootwoodShell() {
     gameState,
     currentScene,
     moveToNextScene,
-    moveToScene,
     chooseOption,
     resolveEvent,
     advanceMathLevel,
+    advanceReadingLevel,
     getMathPrompt,
     getReadingPrompt,
   } = useGameEngine({
@@ -31,14 +30,14 @@ export function RootwoodShell() {
     initialSceneId: rootwoodEpisode1Meta.initialSceneId,
   })
 
-  // Mastery advancement: watch for the flag set inside resolveEvent
+  // Watch mastery flag and advance the appropriate skill
   useEffect(() => {
-    if (gameState.flags['__readyToAdvanceMath']) {
+    if (gameState.flags['__readyToAdvance']) {
+      // Advance whichever skill type was most recently challenged
+      // (simple heuristic: advance math; reading advancement triggered by component)
       advanceMathLevel()
     }
-  }, [gameState.flags['__readyToAdvanceMath']])
-
-  const scene = currentScene as RootwoodScene | undefined
+  }, [gameState.flags['__readyToAdvance']])
 
   const [rewardPopup, setRewardPopup] = useState<{
     message: string
@@ -46,6 +45,8 @@ export function RootwoodShell() {
     buttonLabel: string
     continueAction: () => void
   } | null>(null)
+
+  const scene = currentScene as RootwoodScene | undefined
 
   if (!scene) {
     return (
@@ -57,11 +58,12 @@ export function RootwoodShell() {
     )
   }
 
-  const sceneText = Array.isArray(scene.text) ? scene.text : [scene.text]
   const pageNumber = rootwoodEpisode1.findIndex(s => s.id === scene.id) + 1
   const totalPages = rootwoodEpisode1.length
 
   function handleResolve(event: RootwoodEvent, result: 'success' | 'fail') {
+    // RootwoodChallengeEvent casts safely — success/fail nav falls through
+    // to successSceneId/failureSceneId which both event shapes have
     resolveEvent(event as unknown as GameEvent, result)
   }
 
@@ -72,7 +74,7 @@ export function RootwoodShell() {
           <div className="reward-overlay">
             <section className="reward-popup" aria-live="polite">
               <p className="reward-popup-title">{rewardPopup.message}</p>
-              <p className="reward-popup-text">XP earned: {rewardPopup.xp}</p>
+              <p className="reward-popup-text">+{rewardPopup.xp} XP</p>
               <button
                 className="action-button reward-popup-button"
                 onClick={() => {
@@ -89,9 +91,8 @@ export function RootwoodShell() {
 
         <header className="top-bar">
           <div className="stat-group" aria-label="Player stats">
-            <div className="stat-pill">❤️ {gameState.stats.hearts}</div>
             <div className="stat-pill">⭐ {gameState.stats.xpThisEpisode} XP</div>
-            <div className="stat-pill">📚 {gameState.skillProfile.reading}</div>
+            <div className="stat-pill">📖 {gameState.skillProfile.reading}</div>
             <div className="stat-pill">🔢 {gameState.skillProfile.math}</div>
           </div>
         </header>
@@ -103,7 +104,7 @@ export function RootwoodShell() {
           </div>
 
           <div className="scene-text">
-            {sceneText.map((line) => (
+            {scene.text.map((line) => (
               <p className="scene-copy" key={line}>{line}</p>
             ))}
           </div>
@@ -112,15 +113,12 @@ export function RootwoodShell() {
         <footer className="action-panel">
           <RootwoodEventControls
             scene={scene}
-            gameState={gameState}
             getMathPrompt={getMathPrompt}
             getReadingPrompt={getReadingPrompt}
             onContinue={moveToNextScene}
-            onChoose={(nextSceneId, flagKey) => {
-              chooseOption(nextSceneId, flagKey)
-            }}
+            onChoose={chooseOption}
             onResolve={handleResolve}
-            onShowReward={(popup) => setRewardPopup(popup)}
+            onShowReward={setRewardPopup}
           />
         </footer>
       </section>
@@ -135,27 +133,23 @@ interface RewardPopupData {
   continueAction: () => void
 }
 
-interface EventControlsProps {
-  scene: RootwoodScene
-  gameState: ReturnType<typeof useGameEngine>['gameState']
-  getMathPrompt: (content: Parameters<typeof selectForMathLevel>[0]) => string
-  getReadingPrompt: (content: Parameters<typeof selectForReadingLevel>[0]) => string
-  onContinue: () => void
-  onChoose: (nextSceneId: string, flagKey?: string) => void
-  onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
-  onShowReward: (popup: RewardPopupData) => void
-}
-
 function RootwoodEventControls({
   scene,
-  gameState,
   getMathPrompt,
   getReadingPrompt,
   onContinue,
   onChoose,
   onResolve,
   onShowReward,
-}: EventControlsProps) {
+}: {
+  scene: RootwoodScene
+  getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
+  getReadingPrompt: (c: Parameters<typeof selectForReadingLevel>[0]) => string
+  onContinue: () => void
+  onChoose: (nextSceneId: string, flagKey?: string) => void
+  onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
+  onShowReward: (popup: RewardPopupData) => void
+}) {
   const event = scene.event
 
   if (!event) {
@@ -164,8 +158,8 @@ function RootwoodEventControls({
         Continue
       </button>
     ) : (
-      <div>
-        <p className="action-note">The End. More episodes coming soon!</p>
+      <>
+        <p className="action-note">Episode complete! More coming soon.</p>
         <button
           className="action-button continue-button"
           onClick={() => window.location.reload()}
@@ -173,7 +167,7 @@ function RootwoodEventControls({
         >
           Return to Start
         </button>
-      </div>
+      </>
     )
   }
 
@@ -187,38 +181,20 @@ function RootwoodEventControls({
         event={event}
         onResolve={onResolve}
         onShowReward={onShowReward}
-        sceneNextId={scene.nextSceneId}
-        onContinue={onContinue}
       />
     )
   }
 
-  if (event.type === 'combat') {
-    return (
-      <CombatControls
-        event={event}
-        gameState={gameState}
-        getMathPrompt={getMathPrompt}
-        onResolve={onResolve}
-        onShowReward={onShowReward}
-      />
-    )
-  }
-
-  if (event.type === 'riddle') {
-    return (
-      <RiddleControls
-        event={event}
-        gameState={gameState}
-        getMathPrompt={getMathPrompt}
-        getReadingPrompt={getReadingPrompt}
-        onResolve={onResolve}
-        onShowReward={onShowReward}
-      />
-    )
-  }
-
-  return null
+  // event.type === 'challenge'
+  return (
+    <ChallengeControls
+      event={event}
+      getMathPrompt={getMathPrompt}
+      getReadingPrompt={getReadingPrompt}
+      onResolve={onResolve}
+      onShowReward={onShowReward}
+    />
+  )
 }
 
 function ChoiceControls({
@@ -251,33 +227,33 @@ function RewardControls({
   event,
   onResolve,
   onShowReward,
-  sceneNextId,
-  onContinue,
 }: {
   event: RootwoodRewardEvent
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
-  sceneNextId?: string
-  onContinue: () => void
 }) {
+  const [collected, setCollected] = useState(false)
+
+  if (collected) return null
+
   return (
     <>
       <p className="event-prompt">{event.prompt}</p>
       <p className="action-note feedback-panel feedback-panel-success">
-        Reward found: {event.reward.label}
-        {event.reward.description ? ` — ${event.reward.description}` : ''}
+        Reward: {event.reward.label} — {event.reward.description}
       </p>
       <div className="button-row">
         <button
           className="action-button"
           onClick={() => {
+            setCollected(true)
             onResolve(event, 'success')
             onShowReward({
-              message: 'You earned a reward!',
+              message: `You found the ${event.reward.label}!`,
               xp: 5,
               buttonLabel: event.nextSceneId ? 'Continue' : 'Return to Start',
               continueAction: event.nextSceneId
-                ? () => {} // resolveEvent already navigated
+                ? () => {}  // resolveEvent already navigated
                 : () => window.location.reload(),
             })
           }}
@@ -290,164 +266,42 @@ function RewardControls({
   )
 }
 
-function CombatControls({
+function ChallengeControls({
   event,
-  gameState,
-  getMathPrompt,
-  onResolve,
-  onShowReward,
-}: {
-  event: RootwoodCombatEvent
-  gameState: ReturnType<typeof useGameEngine>['gameState']
-  getMathPrompt: (content: Parameters<typeof selectForMathLevel>[0]) => string
-  onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
-  onShowReward: (popup: RewardPopupData) => void
-}) {
-  const [answerState, setAnswerState] = useState<{
-    status: 'idle' | 'success' | 'fail'
-    message: string
-    selectedValue: string | null
-  }>({ status: 'idle', message: '', selectedValue: null })
-
-  const prompt = getMathPrompt(event.promptByLevel)
-  const correctAnswer = getMathPrompt(event.correctAnswerByLevel).trim().toLowerCase()
-  const hint = event.hintByLevel ? getMathPrompt(event.hintByLevel) : null
-
-  // Determine if the correct answer is among the option values
-  const hasMatchingOption = event.options.some(
-    (o) => o.value.trim().toLowerCase() === correctAnswer
-  )
-
-  function handleAnswer(value: string) {
-    const normalized = value.trim().toLowerCase()
-    if (normalized === correctAnswer) {
-      setAnswerState({ status: 'success', message: 'Correct!', selectedValue: normalized })
-      onShowReward({
-        message: 'Well done!',
-        xp: 15,
-        buttonLabel: 'Continue',
-        continueAction: () => onResolve(event, 'success'),
-      })
-    } else {
-      setAnswerState({
-        status: 'fail',
-        message: 'Not quite — look at the hint and try again.',
-        selectedValue: normalized,
-      })
-      onResolve(event, 'fail')
-    }
-  }
-
-  return (
-    <>
-      <p className="monster-name">You face: {event.enemyName}</p>
-      <p className="event-prompt">{prompt}</p>
-      {hint && answerState.status === 'fail' ? (
-        <p className="action-note">Hint: {hint}</p>
-      ) : null}
-      {answerState.message ? (
-        <p
-          className={
-            answerState.status === 'success'
-              ? 'result-text result-text-success feedback-panel feedback-panel-success'
-              : 'result-text result-text-fail feedback-panel feedback-panel-fail'
-          }
-        >
-          {answerState.message}
-        </p>
-      ) : null}
-      {answerState.status !== 'success' && (
-        <div className="button-row">
-          {hasMatchingOption ? (
-            event.options.map((option) => {
-              const isCorrectOption = option.value.trim().toLowerCase() === correctAnswer
-              const isSelectedWrong =
-                answerState.status === 'fail' &&
-                answerState.selectedValue === option.value.trim().toLowerCase()
-              const className = answerState.status !== 'idle' && isCorrectOption
-                ? 'action-button answer-button answer-button-correct'
-                : isSelectedWrong
-                  ? 'action-button answer-button answer-button-wrong'
-                  : 'action-button answer-button'
-              return (
-                <button
-                  key={option.id}
-                  className={className}
-                  onClick={() => handleAnswer(option.value)}
-                  type="button"
-                >
-                  {option.text}
-                </button>
-              )
-            })
-          ) : (
-            // No matching option for current level — show text input fallback
-            <RiddleFallbackInput
-              correctAnswer={correctAnswer}
-              isNumeric={true}
-              onAnswer={handleAnswer}
-              failed={answerState.status === 'fail'}
-            />
-          )}
-        </div>
-      )}
-    </>
-  )
-}
-
-function RiddleControls({
-  event,
-  gameState,
   getMathPrompt,
   getReadingPrompt,
   onResolve,
   onShowReward,
 }: {
-  event: RootwoodRiddleEvent
-  gameState: ReturnType<typeof useGameEngine>['gameState']
-  getMathPrompt: (content: Parameters<typeof selectForMathLevel>[0]) => string
-  getReadingPrompt: (content: Parameters<typeof selectForReadingLevel>[0]) => string
+  event: RootwoodChallengeEvent
+  getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
+  getReadingPrompt: (c: Parameters<typeof selectForReadingLevel>[0]) => string
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
 }) {
-  const [answerState, setAnswerState] = useState<{
-    status: 'idle' | 'success' | 'fail'
-    message: string
-  }>({ status: 'idle', message: '' })
+  const [status, setStatus] = useState<'idle' | 'success' | 'fail'>('idle')
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  // Detect math vs reading riddle by checking key prefixes
-  const isMathRiddle = Object.keys(event.promptByLevel).some(k => /^M/.test(k))
+  const selectLevel = event.skillType === 'math' ? getMathPrompt : getReadingPrompt
+  const prompt = selectLevel(event.promptByLevel as Parameters<typeof selectForMathLevel>[0])
+  const hint   = selectLevel(event.hintByLevel   as Parameters<typeof selectForMathLevel>[0])
 
-  const prompt = isMathRiddle
-    ? getMathPrompt(event.promptByLevel as Parameters<typeof selectForMathLevel>[0])
-    : getReadingPrompt(event.promptByLevel as Parameters<typeof selectForReadingLevel>[0])
+  function handleTap(optionId: string, isCorrect: boolean) {
+    if (status === 'success') return  // already solved
 
-  const correctAnswer = (isMathRiddle
-    ? getMathPrompt(event.correctAnswerByLevel as Parameters<typeof selectForMathLevel>[0])
-    : getReadingPrompt(event.correctAnswerByLevel as Parameters<typeof selectForReadingLevel>[0])
-  ).trim().toLowerCase()
+    setSelectedId(optionId)
 
-  const hint = event.hintByLevel
-    ? isMathRiddle
-      ? getMathPrompt(event.hintByLevel as Parameters<typeof selectForMathLevel>[0])
-      : getReadingPrompt(event.hintByLevel as Parameters<typeof selectForReadingLevel>[0])
-    : null
-
-  function handleAnswer(value: string) {
-    const normalized = value.trim().toLowerCase()
-    if (normalized === correctAnswer) {
-      setAnswerState({ status: 'success', message: 'Correct! The path opens before you.' })
+    if (isCorrect) {
+      setStatus('success')
+      onResolve(event, 'success')
       onShowReward({
-        message: 'Well done, adventurer!',
+        message: 'Well done!',
         xp: 15,
         buttonLabel: 'Continue',
-        continueAction: () => onResolve(event, 'success'),
+        continueAction: () => {},  // resolveEvent already navigated
       })
     } else {
-      setAnswerState({
-        status: 'fail',
-        message: 'That is not quite right. Try again.',
-      })
+      setStatus('fail')
       onResolve(event, 'fail')
     }
   }
@@ -455,69 +309,37 @@ function RiddleControls({
   return (
     <>
       <p className="event-prompt">{prompt}</p>
-      {hint && answerState.status === 'fail' ? (
-        <p className="action-note">Hint: {hint}</p>
-      ) : null}
-      {answerState.message ? (
-        <p
-          className={
-            answerState.status === 'success'
-              ? 'result-text result-text-success feedback-panel feedback-panel-success'
-              : 'result-text result-text-fail feedback-panel feedback-panel-fail'
-          }
-        >
-          {answerState.message}
+
+      {status === 'fail' && hint ? (
+        <p className="action-note feedback-panel feedback-panel-fail">
+          Hint: {hint}
         </p>
       ) : null}
-      {answerState.status !== 'success' && (
-        <RiddleFallbackInput
-          correctAnswer={correctAnswer}
-          isNumeric={isMathRiddle}
-          onAnswer={handleAnswer}
-          failed={answerState.status === 'fail'}
-        />
-      )}
+
+      <div className="button-row">
+        {event.options.map((option) => {
+          const isSelected = selectedId === option.id
+          const showCorrect = status !== 'idle' && option.isCorrect
+          const showWrong   = status === 'fail' && isSelected && !option.isCorrect
+
+          const className = showCorrect
+            ? 'action-button answer-button answer-button-correct'
+            : showWrong
+              ? 'action-button answer-button answer-button-wrong'
+              : 'action-button answer-button'
+
+          return (
+            <button
+              key={option.id}
+              className={className}
+              onClick={() => handleTap(option.id, option.isCorrect)}
+              type="button"
+            >
+              {option.text}
+            </button>
+          )
+        })}
+      </div>
     </>
-  )
-}
-
-function RiddleFallbackInput({
-  correctAnswer: _correctAnswer,
-  isNumeric,
-  onAnswer,
-  failed,
-}: {
-  correctAnswer: string
-  isNumeric: boolean
-  onAnswer: (value: string) => void
-  failed: boolean
-}) {
-  const [value, setValue] = useState('')
-
-  return (
-    <div className="button-row">
-      <input
-        className={failed ? 'answer-input answer-input-fail' : 'answer-input'}
-        inputMode={isNumeric ? 'numeric' : 'text'}
-        pattern={isNumeric ? '[0-9]*' : undefined}
-        value={value}
-        onChange={(e) =>
-          setValue(isNumeric ? e.target.value.replace(/\D/g, '') : e.target.value)
-        }
-        placeholder={isNumeric ? 'Type a number' : 'Type your answer'}
-        aria-label="Type your answer"
-      />
-      <button
-        className="action-button"
-        onClick={() => {
-          if (!value.trim()) return
-          onAnswer(value)
-          setValue('')
-        }}
-        type="button"
-      >
-        Check Answer
-      </button>
-    </div>
   )
 }

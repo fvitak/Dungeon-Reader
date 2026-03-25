@@ -1,4 +1,10 @@
-import type { SkillProfile, MathSkillLevel, ReadingSkillLevel, MathLevelText, ReadingLevelText } from './skillLevel'
+import type {
+  SkillProfile,
+  MathLevelText,
+  ReadingLevelText,
+  MathSkillLevel,
+  ReadingSkillLevel,
+} from './skillLevel'
 
 export type GradeBand = '1-2' | '3-4' | '5'
 
@@ -92,82 +98,47 @@ export interface ChoiceOption {
   flagKey?: string
 }
 
-// ---------------------------------------------------------------------------
-// Rootwood scene and event types — skill-level-aware content
-// Existing StoryScene stays intact for backward compatibility with story.ts
-// ---------------------------------------------------------------------------
+// ─── Rootwood scene and event types ───────────────────────────────────────
+// All challenges are multiple choice. No free text input. Ever.
+// Existing StoryScene and event types stay intact for backward compat.
 
 export interface RootwoodScene {
   id: string
-  text: string | [string] | [string, string] | [string, string, string]
-  image: {
-    src: string
-    alt: string
-  }
+  text: [string] | [string, string] | [string, string, string]
+  image: { src: string; alt: string }
   event?: RootwoodEvent
   nextSceneId?: string
-  minMathLevel?: MathSkillLevel
-  minReadingLevel?: ReadingSkillLevel
 }
 
 export type RootwoodEvent =
-  | RootwoodCombatEvent
-  | RootwoodRiddleEvent
+  | RootwoodChallengeEvent   // replaces both 'combat' and 'riddle' — always multiple choice
   | RootwoodChoiceEvent
   | RootwoodRewardEvent
 
-export interface RootwoodCombatEvent {
-  type: 'combat'
-  enemyName: string
-  promptByLevel: MathLevelText
-  correctAnswerByLevel: MathLevelText
-  options: RootwoodEventOption[]
+// Single challenge type — no distinction between combat/riddle.
+// ALL answer selection is done by tapping one of 3 options.
+// The keyboard must never appear.
+export interface RootwoodChallengeEvent {
+  type: 'challenge'
+  skillType: 'math' | 'reading'
+  promptByLevel: MathLevelText | ReadingLevelText
+  hintByLevel:   MathLevelText | ReadingLevelText
+  options: RootwoodChallengeOption[]  // 3 options always — one isCorrect: true
   successSceneId: string
-  failureSceneId?: string
-  hintByLevel?: MathLevelText
-  reward?: {
-    id: string
-    label: string
-    description?: string
-  }
+  failureSceneId: string              // always same scene = retry
+  reward?: RootwoodReward
 }
 
-export interface RootwoodRiddleEvent {
-  type: 'riddle'
-  promptByLevel: MathLevelText | ReadingLevelText
-  correctAnswerByLevel: MathLevelText | ReadingLevelText
-  hintByLevel?: MathLevelText | ReadingLevelText
-  successSceneId: string
-  failureSceneId?: string
-  reward?: {
-    id: string
-    label: string
-    description?: string
-  }
+export interface RootwoodChallengeOption {
+  id: string
+  text: string        // plain text — shown at all skill levels
+  isCorrect: boolean
 }
 
 export interface RootwoodChoiceEvent {
   type: 'choice'
   prompt: string
-  options: RootwoodChoiceOption[]
-}
-
-export interface RootwoodRewardEvent {
-  type: 'reward'
-  prompt: string
-  reward: {
-    id: string
-    label: string
-    description?: string
-  }
-  nextSceneId?: string
-}
-
-export interface RootwoodEventOption {
-  id: string
-  text: string
-  value: string
-  isCorrect: boolean
+  options: RootwoodChoiceOption[]   // 2 options — both valid, both earn XP
 }
 
 export interface RootwoodChoiceOption {
@@ -175,4 +146,17 @@ export interface RootwoodChoiceOption {
   text: string
   nextSceneId: string
   flagKey?: string
+}
+
+export interface RootwoodRewardEvent {
+  type: 'reward'
+  prompt: string
+  reward: RootwoodReward
+  nextSceneId?: string
+}
+
+export interface RootwoodReward {
+  id: string
+  label: string
+  description: string   // written in Cobb's voice
 }
