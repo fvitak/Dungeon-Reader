@@ -5,8 +5,6 @@ import type {
   RiddleEvent,
   StoryScene,
   RootwoodScene,
-  RootwoodChallengeEvent,
-  RootwoodChoiceEvent,
   GameEvent,
   GameState,
 } from '../types/game'
