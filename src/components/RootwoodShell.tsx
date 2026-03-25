@@ -188,6 +188,7 @@ function RootwoodEventControls({
   // event.type === 'challenge'
   return (
     <ChallengeControls
+      key={scene.id}
       event={event}
       getMathPrompt={getMathPrompt}
       getReadingPrompt={getReadingPrompt}
