@@ -100,12 +100,19 @@ export interface ChoiceOption {
 // All challenges are multiple choice. No free text input. Ever.
 // Existing StoryScene and event types stay intact for backward compat.
 
+export interface RootwoodSavePoint {
+  chapterName: string    // e.g. 'Chapter 1: The Door'
+  chapterNumber: number  // 1 | 2 | …
+}
+
 export interface RootwoodScene {
   id: string
   text: [string] | [string, string] | [string, string, string]
   image: { src: string; alt: string }
   event?: RootwoodEvent
   nextSceneId?: string
+  /** Present on chapter-end scenes — triggers the save dialog */
+  savePoint?: RootwoodSavePoint
 }
 
 export type RootwoodEvent =

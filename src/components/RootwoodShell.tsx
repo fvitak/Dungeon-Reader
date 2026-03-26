@@ -13,15 +13,21 @@ import type {
   RootwoodRewardEvent,
   RootwoodReward,
   GameEvent,
+  GameState,
 } from '../types/game'
 import type { TrophyItem } from '../App'
+import type { SaveSlot } from '../types/save'
+import { createSave } from '../utils/saveSystem'
+import { SaveModal } from './SaveModal'
 
 interface RootwoodShellProps {
   onComplete: (episodeId: string, rewards: TrophyItem[]) => void
   onBack: () => void
+  /** If provided, resume from this saved state instead of starting fresh */
+  initialSave?: SaveSlot
 }
 
-export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
+export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShellProps) {
   const {
     gameState,
     currentScene,
@@ -31,10 +37,20 @@ export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
     advanceMathLevel,
     getMathPrompt,
     getReadingPrompt,
+    loadState,
   } = useGameEngine({
     scenes: rootwoodEpisode1,
-    initialSceneId: rootwoodEpisode1Meta.initialSceneId,
+    initialSceneId: initialSave?.sceneId ?? rootwoodEpisode1Meta.initialSceneId,
+    initialState: initialSave?.gameState,
   })
+
+  // Restore full game state when loading a save
+  useEffect(() => {
+    if (initialSave) {
+      loadState(initialSave.gameState, initialSave.sceneId)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (gameState.flags['__readyToAdvance']) {
@@ -48,6 +64,9 @@ export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
     buttonLabel: string
     continueAction: () => void
   } | null>(null)
+
+  const [showSaveModal, setShowSaveModal] = useState(false)
+  const pendingContinue = useRef<(() => void) | null>(null)
 
   // Collect rewards earned during this episode
   const earnedRewards = useRef<TrophyItem[]>([])
@@ -83,6 +102,41 @@ export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
     onComplete(rootwoodEpisode1Meta.id, earnedRewards.current)
   }
 
+  /** Called when the player taps Continue on any scene */
+  function handleContinue() {
+    if (scene?.savePoint) {
+      // Intercept — offer to save before advancing
+      pendingContinue.current = moveToNextScene
+      setShowSaveModal(true)
+    } else {
+      moveToNextScene()
+    }
+  }
+
+  function handleSaveAndContinue(saveName: string) {
+    createSave({
+      name: saveName,
+      episodeId: rootwoodEpisode1Meta.id,
+      episodeTitle: rootwoodEpisode1Meta.title,
+      chapterName: scene!.savePoint!.chapterName,
+      chapterNumber: scene!.savePoint!.chapterNumber,
+      sceneId: scene!.nextSceneId!,
+      mathRank: gameState.skillProfile.math,
+      readingRank: gameState.skillProfile.reading,
+      xp: gameState.stats.xp,
+      gameState: gameState as GameState,
+    })
+    setShowSaveModal(false)
+    pendingContinue.current?.()
+    pendingContinue.current = null
+  }
+
+  function handleSkipSave() {
+    setShowSaveModal(false)
+    pendingContinue.current?.()
+    pendingContinue.current = null
+  }
+
   return (
     <main className="app-shell">
       <section className="game-card scene-card-enter">
@@ -103,6 +157,16 @@ export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
               </button>
             </section>
           </div>
+        ) : null}
+
+        {showSaveModal ? (
+          <SaveModal
+            chapterName={scene.savePoint!.chapterName}
+            mathRank={gameState.skillProfile.math}
+            readingRank={gameState.skillProfile.reading}
+            onSave={handleSaveAndContinue}
+            onSkip={handleSkipSave}
+          />
         ) : null}
 
         <header className="top-bar">
@@ -134,7 +198,7 @@ export function RootwoodShell({ onComplete, onBack }: RootwoodShellProps) {
             scene={scene}
             getMathPrompt={getMathPrompt}
             getReadingPrompt={getReadingPrompt}
-            onContinue={moveToNextScene}
+            onContinue={handleContinue}
             onChoose={chooseOption}
             onResolve={handleResolve}
             onShowReward={setRewardPopup}
@@ -178,6 +242,18 @@ function RootwoodEventControls({
   const event = scene.event
 
   if (!event) {
+    // Chapter-end save point: show both Continue and Save label
+    if (scene.savePoint && scene.nextSceneId) {
+      return (
+        <div className="save-point-actions">
+          <p className="save-point-label">⚔️ End of {scene.savePoint.chapterName}</p>
+          <button className="action-button continue-button" onClick={onContinue} type="button">
+            Continue to Chapter {scene.savePoint.chapterNumber + 1} →
+          </button>
+        </div>
+      )
+    }
+
     return scene.nextSceneId ? (
       <button className="action-button continue-button" onClick={onContinue} type="button">
         Continue

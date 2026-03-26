@@ -798,3 +798,284 @@
 
   .intro-title { font-size: 3rem; }
 }
+
+/* ─── SAVE / LOAD SYSTEM ─────────────────────────────────────────────────── */
+
+/* Intro screen button group */
+.intro-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.intro-load-btn {
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(0,212,255,0.25);
+}
+.intro-load-btn:hover {
+  background: rgba(0,212,255,0.1);
+  box-shadow: 0 0 20px rgba(0,212,255,0.4);
+}
+
+/* Load button in menu actions row */
+.load-button {
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(0,212,255,0.2);
+}
+.load-button:hover {
+  background: rgba(0,212,255,0.08);
+  box-shadow: 0 0 20px rgba(0,212,255,0.35);
+}
+
+/* Chapter-end save point */
+.save-point-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+.save-point-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(255,215,0,0.5);
+  margin: 0 0 2px;
+  text-align: center;
+}
+
+/* Save modal overlay */
+.save-modal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: rgba(5,3,15,0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: inherit;
+}
+
+.save-modal {
+  background: var(--bg-card);
+  border: 2px solid var(--neon-purple);
+  border-radius: 18px;
+  padding: 28px 24px 24px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 0 40px rgba(157,78,221,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.save-modal-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-shadow: 0 0 14px rgba(255,215,0,0.5);
+  margin: 0;
+  text-align: center;
+}
+
+.save-modal-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(157,78,221,0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(157,78,221,0.3);
+}
+
+.save-info-chapter {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--neon-purple);
+}
+
+.save-info-ranks {
+  display: flex;
+  gap: 8px;
+}
+
+.save-modal-label {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.save-name-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-panel);
+  border: 2px solid rgba(157,78,221,0.5);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.save-name-input:focus {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 12px rgba(157,78,221,0.3);
+}
+.save-name-input::placeholder { color: var(--text-dim); }
+
+.save-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--neon-purple), #7b2fff);
+  border-color: var(--neon-purple);
+}
+.save-btn:hover {
+  box-shadow: 0 0 24px rgba(157,78,221,0.55);
+  transform: translateY(-1px);
+}
+
+.skip-btn {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.15);
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+.skip-btn:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: var(--text);
+}
+
+/* Load menu save list */
+.load-menu { min-height: 400px; }
+
+.save-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.save-slot {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid rgba(157,78,221,0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-panel);
+  transition: border-color 0.2s;
+}
+.save-slot:hover { border-color: rgba(157,78,221,0.6); }
+
+.save-slot-load {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+}
+.save-slot-load:hover { background: rgba(157,78,221,0.06); }
+
+.save-slot-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.save-slot-chapter {
+  font-size: 0.82rem;
+  color: var(--neon-purple);
+  font-weight: 700;
+}
+
+.save-slot-episode {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.save-slot-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.save-slot-xp {
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.save-slot-date {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+.save-slot-delete {
+  padding: 0 14px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid rgba(157,78,221,0.2);
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.15s, background 0.15s;
+}
+.save-slot-delete:hover {
+  color: var(--red);
+  background: rgba(248,113,113,0.08);
+}
+
+/* Delete confirm inline */
+.save-slot-confirm {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+}
+.save-slot-confirm-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0;
+}
+.save-slot-confirm-buttons {
+  display: flex;
+  gap: 8px;
+}
+.delete-confirm-btn {
+  background: rgba(248,113,113,0.15);
+  border-color: var(--red);
+  color: var(--red);
+  font-size: 0.88rem;
+  padding: 8px 16px;
+}
+.delete-confirm-btn:hover {
+  background: rgba(248,113,113,0.25);
+}

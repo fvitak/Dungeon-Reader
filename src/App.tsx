@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import './styles/app.css'
 import { RootwoodShell } from './components/RootwoodShell'
+import { LoadMenu } from './components/LoadMenu'
 import { rootwoodEpisode1Meta } from './data/rootwoodEpisode1'
+import { hasSaves } from './utils/saveSystem'
+import type { SaveSlot } from './types/save'
 
 export interface TrophyItem {
   id: string
@@ -10,7 +13,7 @@ export interface TrophyItem {
   episodeId: string
 }
 
-type Screen = 'intro' | 'menu' | 'playing' | 'trophy'
+type Screen = 'intro' | 'menu' | 'playing' | 'trophy' | 'load'
 
 const EPISODES = [
   {
@@ -39,6 +42,7 @@ function App() {
   const [screen, setScreen] = useState<Screen>('intro')
   const [completedEpisodes, setCompletedEpisodes] = useState<string[]>([])
   const [trophies, setTrophies] = useState<TrophyItem[]>([])
+  const [activeSave, setActiveSave] = useState<SaveSlot | undefined>(undefined)
 
   function handleEpisodeComplete(episodeId: string, rewards: TrophyItem[]) {
     setCompletedEpisodes(prev => Array.from(new Set([...prev, episodeId])))
@@ -46,13 +50,26 @@ function App() {
       const existingIds = new Set(prev.map(t => t.id))
       return [...prev, ...rewards.filter(r => !existingIds.has(r.id))]
     })
+    setActiveSave(undefined)
     setScreen('menu')
+  }
+
+  function handleLoadSave(save: SaveSlot) {
+    setActiveSave(save)
+    setScreen('playing')
+  }
+
+  function handleStartFresh() {
+    setActiveSave(undefined)
+    setScreen('playing')
   }
 
   function isUnlocked(_episodeId: string, index: number) {
     if (index === 0) return true
     return completedEpisodes.includes(EPISODES[index - 1].id)
   }
+
+  const savesExist = hasSaves()
 
   if (screen === 'intro') {
     return (
@@ -64,15 +81,35 @@ function App() {
             A school lives inside the world's oldest tree.<br />
             Something is already wrong.
           </p>
-          <button
-            className="action-button intro-start-btn"
-            onClick={() => setScreen('menu')}
-            type="button"
-          >
-            Start
-          </button>
+          <div className="intro-buttons">
+            <button
+              className="action-button intro-start-btn"
+              onClick={() => setScreen('menu')}
+              type="button"
+            >
+              Start
+            </button>
+            {savesExist && (
+              <button
+                className="action-button intro-load-btn"
+                onClick={() => setScreen('load')}
+                type="button"
+              >
+                📂 Load Game
+              </button>
+            )}
+          </div>
         </div>
       </main>
+    )
+  }
+
+  if (screen === 'load') {
+    return (
+      <LoadMenu
+        onLoad={handleLoadSave}
+        onBack={() => setScreen('intro')}
+      />
     )
   }
 
@@ -94,7 +131,7 @@ function App() {
                 <button
                   key={ep.id}
                   className={`episode-card ${locked ? 'episode-card-locked' : ''} ${completed ? 'episode-card-done' : ''}`}
-                  onClick={() => !locked && setScreen('playing')}
+                  onClick={() => !locked && handleStartFresh()}
                   disabled={locked}
                   type="button"
                 >
@@ -113,6 +150,15 @@ function App() {
           </div>
 
           <div className="menu-actions">
+            {savesExist && (
+              <button
+                className="action-button load-button"
+                onClick={() => setScreen('load')}
+                type="button"
+              >
+                📂 Load Game
+              </button>
+            )}
             <button
               className="action-button trophy-button"
               onClick={() => setScreen('trophy')}
@@ -164,7 +210,8 @@ function App() {
   return (
     <RootwoodShell
       onComplete={handleEpisodeComplete}
-      onBack={() => setScreen('menu')}
+      onBack={() => { setActiveSave(undefined); setScreen('menu') }}
+      initialSave={activeSave}
     />
   )
 }

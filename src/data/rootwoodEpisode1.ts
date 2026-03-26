@@ -254,6 +254,7 @@ export const rootwoodEpisode1: RootwoodScene[] = [
     ],
     image: { src: img('creature-wakes'), alt: 'The tiny creature sitting up with one blazing green eye open, looking directly at the reader' },
     nextSceneId: 'rw1-pip-meet',
+    savePoint: { chapterName: 'Chapter 1: The Door', chapterNumber: 1 },
   },
 
   // ─────────────────────────────────────────────────────────────────

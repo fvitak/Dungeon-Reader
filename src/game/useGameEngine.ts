@@ -23,6 +23,8 @@ interface UseGameEngineOptions {
   scenes: StoryScene[] | RootwoodScene[]
   initialSceneId: string
   initialGradeBand?: GradeBand
+  /** If provided, restore this full state on mount (save/load) */
+  initialState?: GameState
 }
 
 const defaultStats = {
@@ -37,18 +39,21 @@ export function useGameEngine({
   scenes,
   initialSceneId,
   initialGradeBand = '3-4',
+  initialState,
 }: UseGameEngineOptions) {
-  const [gameState, setGameState] = useState<GameState>({
-    currentSceneId: initialSceneId,
-    completedSceneIds: [],
-    gradeBand: initialGradeBand,
-    skillProfile: { math: 'M1', reading: 'R1' },
-    consecutiveCorrect: 0,
-    stats: defaultStats,
-    inventory: [],
-    rewards: [],
-    flags: {},
-  })
+  const [gameState, setGameState] = useState<GameState>(
+    initialState ?? {
+      currentSceneId: initialSceneId,
+      completedSceneIds: [],
+      gradeBand: initialGradeBand,
+      skillProfile: { math: 'M1', reading: 'R1' },
+      consecutiveCorrect: 0,
+      stats: defaultStats,
+      inventory: [],
+      rewards: [],
+      flags: {},
+    }
+  )
 
   const currentScene = useMemo(
     () => (scenes as Array<{ id: string }>).find((scene) => scene.id === gameState.currentSceneId),
@@ -217,6 +222,11 @@ export function useGameEngine({
     })
   }
 
+  /** Restore a full saved GameState (used by the load system) */
+  function loadState(state: GameState, sceneId: string) {
+    setGameState({ ...state, currentSceneId: sceneId })
+  }
+
   return {
     gameState,
     currentScene,
@@ -231,6 +241,7 @@ export function useGameEngine({
     getReadingPrompt,
     advanceMathLevel,
     advanceReadingLevel,
+    loadState,
   }
 }
 
