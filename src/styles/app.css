@@ -603,6 +603,13 @@
   text-shadow: 0 0 16px rgba(157,78,221,0.6);
 }
 
+.menu-student-name {
+  margin: 8px 0 0;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 0.92rem;
+}
+
 .episode-list { display: grid; gap: 12px; }
 
 .episode-card {

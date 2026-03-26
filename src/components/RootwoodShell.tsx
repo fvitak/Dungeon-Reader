@@ -13,21 +13,19 @@ import type {
   RootwoodRewardEvent,
   RootwoodReward,
   GameEvent,
-  GameState,
 } from '../types/game'
 import type { TrophyItem } from '../App'
 import type { SaveSlot } from '../types/save'
-import { createSave } from '../utils/saveSystem'
-import { SaveModal } from './SaveModal'
+import { updateSave } from '../utils/saveSystem'
 
 interface RootwoodShellProps {
   onComplete: (episodeId: string, rewards: TrophyItem[]) => void
   onBack: () => void
-  /** If provided, resume from this saved state instead of starting fresh */
   initialSave?: SaveSlot
+  onSaveChange?: (save: SaveSlot) => void
 }
 
-export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShellProps) {
+export function RootwoodShell({ onComplete, onBack, initialSave, onSaveChange }: RootwoodShellProps) {
   const {
     gameState,
     currentScene,
@@ -44,7 +42,6 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
     initialState: initialSave?.gameState,
   })
 
-  // Restore full game state when loading a save
   useEffect(() => {
     if (initialSave) {
       loadState(initialSave.gameState, initialSave.sceneId)
@@ -53,10 +50,10 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
   }, [])
 
   useEffect(() => {
-    if (gameState.flags['__readyToAdvance']) {
+    if (gameState.flags.__readyToAdvance) {
       advanceMathLevel()
     }
-  }, [gameState.flags['__readyToAdvance']])
+  }, [advanceMathLevel, gameState.flags.__readyToAdvance])
 
   const [rewardPopup, setRewardPopup] = useState<{
     message: string
@@ -65,13 +62,11 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
     continueAction: () => void
   } | null>(null)
 
-  const [showSaveModal, setShowSaveModal] = useState(false)
-  const pendingContinue = useRef<(() => void) | null>(null)
-
-  // Collect rewards earned during this episode
   const earnedRewards = useRef<TrophyItem[]>([])
+  const lastSavedSnapshot = useRef<string | null>(null)
+
   function trackReward(reward: RootwoodReward) {
-    if (!earnedRewards.current.some(r => r.id === reward.id)) {
+    if (!earnedRewards.current.some(savedReward => savedReward.id === reward.id)) {
       earnedRewards.current = [
         ...earnedRewards.current,
         { ...reward, episodeId: rootwoodEpisode1Meta.id },
@@ -80,6 +75,42 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
   }
 
   const scene = currentScene as RootwoodScene | undefined
+
+  useEffect(() => {
+    if (!initialSave || !scene) {
+      return
+    }
+
+    const chapter = getChapterForScene(scene.id)
+    const snapshot = JSON.stringify({
+      sceneId: scene.id,
+      chapterName: chapter.chapterName,
+      chapterNumber: chapter.chapterNumber,
+      mathRank: gameState.skillProfile.math,
+      readingRank: gameState.skillProfile.reading,
+      xp: gameState.stats.xp,
+      gameState,
+    })
+
+    if (lastSavedSnapshot.current === snapshot) {
+      return
+    }
+
+    lastSavedSnapshot.current = snapshot
+    const updatedSave = updateSave(initialSave.id, {
+      chapterName: chapter.chapterName,
+      chapterNumber: chapter.chapterNumber,
+      sceneId: scene.id,
+      mathRank: gameState.skillProfile.math,
+      readingRank: gameState.skillProfile.reading,
+      xp: gameState.stats.xp,
+      gameState,
+    })
+
+    if (updatedSave) {
+      onSaveChange?.(updatedSave)
+    }
+  }, [gameState, initialSave, onSaveChange, scene])
 
   if (!scene) {
     return (
@@ -91,7 +122,7 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
     )
   }
 
-  const pageNumber = rootwoodEpisode1.findIndex(s => s.id === scene.id) + 1
+  const pageNumber = rootwoodEpisode1.findIndex(storyScene => storyScene.id === scene.id) + 1
   const totalPages = rootwoodEpisode1.length
 
   function handleResolve(event: RootwoodEvent, result: 'success' | 'fail') {
@@ -100,41 +131,6 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
 
   function handleEpisodeEnd() {
     onComplete(rootwoodEpisode1Meta.id, earnedRewards.current)
-  }
-
-  /** Called when the player taps Continue on any scene */
-  function handleContinue() {
-    if (scene?.savePoint) {
-      // Intercept — offer to save before advancing
-      pendingContinue.current = moveToNextScene
-      setShowSaveModal(true)
-    } else {
-      moveToNextScene()
-    }
-  }
-
-  function handleSaveAndContinue(saveName: string) {
-    createSave({
-      name: saveName,
-      episodeId: rootwoodEpisode1Meta.id,
-      episodeTitle: rootwoodEpisode1Meta.title,
-      chapterName: scene!.savePoint!.chapterName,
-      chapterNumber: scene!.savePoint!.chapterNumber,
-      sceneId: scene!.nextSceneId!,
-      mathRank: gameState.skillProfile.math,
-      readingRank: gameState.skillProfile.reading,
-      xp: gameState.stats.xp,
-      gameState: gameState as GameState,
-    })
-    setShowSaveModal(false)
-    pendingContinue.current?.()
-    pendingContinue.current = null
-  }
-
-  function handleSkipSave() {
-    setShowSaveModal(false)
-    pendingContinue.current?.()
-    pendingContinue.current = null
   }
 
   return (
@@ -159,24 +155,14 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
           </div>
         ) : null}
 
-        {showSaveModal ? (
-          <SaveModal
-            chapterName={scene.savePoint!.chapterName}
-            mathRank={gameState.skillProfile.math}
-            readingRank={gameState.skillProfile.reading}
-            onSave={handleSaveAndContinue}
-            onSkip={handleSkipSave}
-          />
-        ) : null}
-
         <header className="top-bar">
           <div className="stat-group" aria-label="Player stats">
-            <div className="stat-pill">⭐ {gameState.stats.xpThisEpisode} XP</div>
-            <div className="stat-pill">📖 {gameState.skillProfile.reading}</div>
-            <div className="stat-pill">🔢 {gameState.skillProfile.math}</div>
+            <div className="stat-pill">XP {gameState.stats.xpThisEpisode}</div>
+            <div className="stat-pill">Reading {gameState.skillProfile.reading}</div>
+            <div className="stat-pill">Math {gameState.skillProfile.math}</div>
           </div>
           <button className="back-button" onClick={onBack} type="button">
-            ← Menu
+            Menu
           </button>
         </header>
 
@@ -198,7 +184,7 @@ export function RootwoodShell({ onComplete, onBack, initialSave }: RootwoodShell
             scene={scene}
             getMathPrompt={getMathPrompt}
             getReadingPrompt={getReadingPrompt}
-            onContinue={handleContinue}
+            onContinue={moveToNextScene}
             onChoose={chooseOption}
             onResolve={handleResolve}
             onShowReward={setRewardPopup}
@@ -230,8 +216,8 @@ function RootwoodEventControls({
   onEpisodeEnd,
 }: {
   scene: RootwoodScene
-  getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
-  getReadingPrompt: (c: Parameters<typeof selectForReadingLevel>[0]) => string
+  getMathPrompt: (content: Parameters<typeof selectForMathLevel>[0]) => string
+  getReadingPrompt: (content: Parameters<typeof selectForReadingLevel>[0]) => string
   onContinue: () => void
   onChoose: (nextSceneId: string, flagKey?: string) => void
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
@@ -242,13 +228,12 @@ function RootwoodEventControls({
   const event = scene.event
 
   if (!event) {
-    // Chapter-end save point: show both Continue and Save label
     if (scene.savePoint && scene.nextSceneId) {
       return (
         <div className="save-point-actions">
-          <p className="save-point-label">⚔️ End of {scene.savePoint.chapterName}</p>
+          <p className="save-point-label">Autosaved after {scene.savePoint.chapterName}</p>
           <button className="action-button continue-button" onClick={onContinue} type="button">
-            Continue to Chapter {scene.savePoint.chapterNumber + 1} →
+            Continue to Chapter {scene.savePoint.chapterNumber + 1}
           </button>
         </div>
       )
@@ -347,7 +332,7 @@ function RewardControls({
     <>
       <p className="event-prompt">{event.prompt}</p>
       <p className="action-note feedback-panel feedback-panel-success">
-        Reward: {event.reward.label} — {event.reward.description}
+        Reward: {event.reward.label} - {event.reward.description}
       </p>
       <div className="button-row">
         <button
@@ -381,8 +366,8 @@ function ChallengeControls({
   onTrackReward,
 }: {
   event: RootwoodChallengeEvent
-  getMathPrompt: (c: Parameters<typeof selectForMathLevel>[0]) => string
-  getReadingPrompt: (c: Parameters<typeof selectForReadingLevel>[0]) => string
+  getMathPrompt: (content: Parameters<typeof selectForMathLevel>[0]) => string
+  getReadingPrompt: (content: Parameters<typeof selectForReadingLevel>[0]) => string
   onResolve: (event: RootwoodEvent, result: 'success' | 'fail') => void
   onShowReward: (popup: RewardPopupData) => void
   onTrackReward: (reward: RootwoodReward) => void
@@ -392,7 +377,7 @@ function ChallengeControls({
 
   const selectLevel = event.skillType === 'math' ? getMathPrompt : getReadingPrompt
   const prompt = selectLevel(event.promptByLevel as Parameters<typeof selectForMathLevel>[0])
-  const hint   = selectLevel(event.hintByLevel   as Parameters<typeof selectForMathLevel>[0])
+  const hint = selectLevel(event.hintByLevel as Parameters<typeof selectForMathLevel>[0])
 
   function handleTap(optionId: string, isCorrect: boolean) {
     if (status === 'success') return
@@ -428,15 +413,15 @@ function ChallengeControls({
         {event.options.map((option) => {
           const isSelected = selectedId === option.id
           const showCorrect = status !== 'idle' && option.isCorrect
-          const showWrong   = status === 'fail' && isSelected && !option.isCorrect
+          const showWrong = status === 'fail' && isSelected && !option.isCorrect
 
           return (
             <button
               key={option.id}
               className={
                 showCorrect ? 'action-button answer-button answer-button-correct'
-                : showWrong  ? 'action-button answer-button answer-button-wrong'
-                             : 'action-button answer-button'
+                : showWrong ? 'action-button answer-button answer-button-wrong'
+                : 'action-button answer-button'
               }
               onClick={() => handleTap(option.id, option.isCorrect)}
               type="button"
@@ -448,4 +433,21 @@ function ChallengeControls({
       </div>
     </>
   )
+}
+
+function getChapterForScene(sceneId: string) {
+  const currentIndex = rootwoodEpisode1.findIndex(scene => scene.id === sceneId)
+  const chapterBreakIndex = rootwoodEpisode1.findIndex(scene => scene.savePoint?.chapterNumber === 1)
+
+  if (currentIndex === -1 || currentIndex <= chapterBreakIndex) {
+    return {
+      chapterName: 'Chapter 1: The Door',
+      chapterNumber: 1,
+    }
+  }
+
+  return {
+    chapterName: 'Chapter 2: The Underbranch',
+    chapterNumber: 2,
+  }
 }

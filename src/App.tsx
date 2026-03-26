@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './styles/app.css'
 import { RootwoodShell } from './components/RootwoodShell'
 import { LoadMenu } from './components/LoadMenu'
+import { NewStudentModal } from './components/NewStudentModal'
 import { rootwoodEpisode1Meta } from './data/rootwoodEpisode1'
-import { hasSaves } from './utils/saveSystem'
+import { createInitialGameState } from './game/useGameEngine'
+import { createSave, hasSaves } from './utils/saveSystem'
 import type { SaveSlot } from './types/save'
 
 export interface TrophyItem {
@@ -43,6 +45,7 @@ function App() {
   const [completedEpisodes, setCompletedEpisodes] = useState<string[]>([])
   const [trophies, setTrophies] = useState<TrophyItem[]>([])
   const [activeSave, setActiveSave] = useState<SaveSlot | undefined>(undefined)
+  const [showNewStudentModal, setShowNewStudentModal] = useState(false)
 
   function handleEpisodeComplete(episodeId: string, rewards: TrophyItem[]) {
     setCompletedEpisodes(prev => Array.from(new Set([...prev, episodeId])))
@@ -50,7 +53,6 @@ function App() {
       const existingIds = new Set(prev.map(t => t.id))
       return [...prev, ...rewards.filter(r => !existingIds.has(r.id))]
     })
-    setActiveSave(undefined)
     setScreen('menu')
   }
 
@@ -59,9 +61,28 @@ function App() {
     setScreen('playing')
   }
 
-  function handleStartFresh() {
-    setActiveSave(undefined)
+  function handleCreateStudent(studentName: string) {
+    const initialState = createInitialGameState(rootwoodEpisode1Meta.initialSceneId)
+    const save = createSave({
+      name: studentName,
+      episodeId: rootwoodEpisode1Meta.id,
+      episodeTitle: rootwoodEpisode1Meta.title,
+      chapterName: 'Chapter 1: The Door',
+      chapterNumber: 1,
+      sceneId: rootwoodEpisode1Meta.initialSceneId,
+      mathRank: initialState.skillProfile.math,
+      readingRank: initialState.skillProfile.reading,
+      xp: initialState.stats.xp,
+      gameState: initialState,
+    })
+
+    setActiveSave(save)
+    setShowNewStudentModal(false)
     setScreen('playing')
+  }
+
+  function handleSaveChange(save: SaveSlot) {
+    setActiveSave(save)
   }
 
   function isUnlocked(_episodeId: string, index: number) {
@@ -78,27 +99,32 @@ function App() {
           <p className="intro-eyebrow">Rootwood Academy</p>
           <h1 className="intro-title">Dungeon Reader</h1>
           <p className="intro-tagline">
-            A school lives inside the world's oldest tree.<br />
+            A school lives inside the world&apos;s oldest tree.
+            <br />
             Something is already wrong.
           </p>
           <div className="intro-buttons">
             <button
               className="action-button intro-start-btn"
-              onClick={() => setScreen('menu')}
+              onClick={() => setShowNewStudentModal(true)}
               type="button"
             >
-              Start
+              New Student
             </button>
-            {savesExist && (
-              <button
-                className="action-button intro-load-btn"
-                onClick={() => setScreen('load')}
-                type="button"
-              >
-                📂 Load Game
-              </button>
-            )}
+            <button
+              className="action-button intro-load-btn"
+              onClick={() => setScreen('load')}
+              type="button"
+            >
+              Returning Student
+            </button>
           </div>
+          {showNewStudentModal ? (
+            <NewStudentModal
+              onConfirm={handleCreateStudent}
+              onCancel={() => setShowNewStudentModal(false)}
+            />
+          ) : null}
         </div>
       </main>
     )
@@ -108,7 +134,7 @@ function App() {
     return (
       <LoadMenu
         onLoad={handleLoadSave}
-        onBack={() => setScreen('intro')}
+        onBack={() => setScreen(activeSave ? 'menu' : 'intro')}
       />
     )
   }
@@ -120,29 +146,32 @@ function App() {
           <header className="menu-header">
             <h1 className="menu-title">Dungeon Reader</h1>
             <p className="menu-subtitle">Rootwood Academy</p>
+            {activeSave ? (
+              <p className="menu-student-name">Student: {activeSave.name}</p>
+            ) : null}
           </header>
 
           <div className="episode-list">
-            {EPISODES.map((ep, i) => {
-              const completed = completedEpisodes.includes(ep.id)
-              const locked = ep.comingSoon || !isUnlocked(ep.id, i)
+            {EPISODES.map((episode, index) => {
+              const completed = completedEpisodes.includes(episode.id)
+              const locked = episode.comingSoon || !isUnlocked(episode.id, index)
 
               return (
                 <button
-                  key={ep.id}
+                  key={episode.id}
                   className={`episode-card ${locked ? 'episode-card-locked' : ''} ${completed ? 'episode-card-done' : ''}`}
-                  onClick={() => !locked && handleStartFresh()}
+                  onClick={() => !locked && setScreen('playing')}
                   disabled={locked}
                   type="button"
                 >
-                  <span className="episode-label">{ep.subtitle}</span>
-                  <span className="episode-title">{ep.title}</span>
+                  <span className="episode-label">{episode.subtitle}</span>
+                  <span className="episode-title">{episode.title}</span>
                   <span className="episode-meta">
-                    {ep.comingSoon
-                      ? '🔒 Coming Soon'
+                    {episode.comingSoon
+                      ? 'Locked: Coming Soon'
                       : completed
-                        ? '✓ Completed'
-                        : `~${ep.minutes} min`}
+                        ? 'Completed'
+                        : `~${episode.minutes} min`}
                   </span>
                 </button>
               )
@@ -150,21 +179,21 @@ function App() {
           </div>
 
           <div className="menu-actions">
-            {savesExist && (
+            {savesExist ? (
               <button
                 className="action-button load-button"
                 onClick={() => setScreen('load')}
                 type="button"
               >
-                📂 Load Game
+                Switch Student
               </button>
-            )}
+            ) : null}
             <button
               className="action-button trophy-button"
               onClick={() => setScreen('trophy')}
               type="button"
             >
-              🏆 Trophy Case
+              Trophy Case
             </button>
           </div>
         </section>
@@ -183,7 +212,7 @@ function App() {
               onClick={() => setScreen('menu')}
               type="button"
             >
-              ← Back
+              Back
             </button>
           </header>
 
@@ -193,10 +222,10 @@ function App() {
             </p>
           ) : (
             <ul className="trophy-list">
-              {trophies.map(t => (
-                <li key={t.id} className="trophy-item">
-                  <span className="trophy-item-label">{t.label}</span>
-                  <span className="trophy-item-desc">{t.description}</span>
+              {trophies.map(trophy => (
+                <li key={trophy.id} className="trophy-item">
+                  <span className="trophy-item-label">{trophy.label}</span>
+                  <span className="trophy-item-desc">{trophy.description}</span>
                 </li>
               ))}
             </ul>
@@ -206,12 +235,12 @@ function App() {
     )
   }
 
-  // screen === 'playing'
   return (
     <RootwoodShell
       onComplete={handleEpisodeComplete}
-      onBack={() => { setActiveSave(undefined); setScreen('menu') }}
+      onBack={() => setScreen('menu')}
       initialSave={activeSave}
+      onSaveChange={handleSaveChange}
     />
   )
 }

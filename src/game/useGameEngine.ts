@@ -35,6 +35,23 @@ const defaultStats = {
   xpThisEpisode: 0,
 }
 
+export function createInitialGameState(
+  initialSceneId: string,
+  initialGradeBand: GradeBand = '3-4',
+): GameState {
+  return {
+    currentSceneId: initialSceneId,
+    completedSceneIds: [],
+    gradeBand: initialGradeBand,
+    skillProfile: { math: 'M1', reading: 'R1' },
+    consecutiveCorrect: 0,
+    stats: { ...defaultStats },
+    inventory: [],
+    rewards: [],
+    flags: {},
+  }
+}
+
 export function useGameEngine({
   scenes,
   initialSceneId,
@@ -42,17 +59,7 @@ export function useGameEngine({
   initialState,
 }: UseGameEngineOptions) {
   const [gameState, setGameState] = useState<GameState>(
-    initialState ?? {
-      currentSceneId: initialSceneId,
-      completedSceneIds: [],
-      gradeBand: initialGradeBand,
-      skillProfile: { math: 'M1', reading: 'R1' },
-      consecutiveCorrect: 0,
-      stats: defaultStats,
-      inventory: [],
-      rewards: [],
-      flags: {},
-    }
+    initialState ?? createInitialGameState(initialSceneId, initialGradeBand)
   )
 
   const currentScene = useMemo(

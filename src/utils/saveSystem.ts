@@ -41,6 +41,29 @@ export function createSave(slot: Omit<SaveSlot, 'id' | 'timestamp'>): SaveSlot {
   return newSave
 }
 
+export function updateSave(
+  id: string,
+  updates: Partial<Omit<SaveSlot, 'id'>>,
+): SaveSlot | undefined {
+  const saves = loadAll()
+  const index = saves.findIndex(save => save.id === id)
+
+  if (index === -1) {
+    return undefined
+  }
+
+  const updatedSave: SaveSlot = {
+    ...saves[index],
+    ...updates,
+    id,
+    timestamp: Date.now(),
+  }
+
+  saves[index] = updatedSave
+  persistAll(saves)
+  return updatedSave
+}
+
 export function deleteSave(id: string): void {
   const saves = loadAll().filter(s => s.id !== id)
   persistAll(saves)
